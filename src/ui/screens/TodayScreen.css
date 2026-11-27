@@ -391,7 +391,7 @@
     display: grid;
     grid-template-columns: minmax(210px, 0.85fr) minmax(0, 1.6fr) minmax(200px, 0.8fr);
     gap: var(--space-6);
-    align-items: start;
+    align-items: stretch;
   }
 
   .split__col--today {
@@ -402,12 +402,6 @@
   .split__col--done {
     padding-left: var(--space-6);
     border-left: var(--hairline) solid var(--hairline-subtle);
-  }
-
-  .split__col--inbox,
-  .split__col--done {
-    position: sticky;
-    top: calc(var(--bar-h) + var(--space-5));
   }
 }
 
