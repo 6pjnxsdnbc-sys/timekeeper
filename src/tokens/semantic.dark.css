@@ -1,38 +1,39 @@
 /**
- * semantic (dark) — 다크는 기본값이다. 그림자를 쓰지 않고 surface 단차로 층을 만든다.
- * 컴포넌트 CSS 는 이 파일의 변수만 참조한다 (설계서 2.4).
+ * semantic (dark) — 기본 폴백 = Midnight Slate.
+ * 실제 팔레트는 tokens/themes.ts 가 data-theme-id 로 심는다. 이 파일은
+ * JS 가 첫 페인트 전에 돌기 전(또는 꺼졌을 때)의 바탕이다.
+ * 컴포넌트 CSS 는 여기의 semantic 변수만 참조한다 (설계서 2.4).
  */
 :root,
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --bg: var(--neutral-950);
-  --surface: var(--neutral-925);
-  --surface-raised: var(--neutral-900);
-  --surface-sunken: var(--neutral-975);
+  --bg: #0b1017;
+  --surface: #121a24;
+  --surface-raised: #18222e;
+  --surface-sunken: #0d141d;
+  --surface-hover: #16202b;
 
-  --border: var(--neutral-850);
-  --border-strong: var(--neutral-800);
+  --border-subtle: #1a2431;
+  --border: #223041;
+  --border-strong: #31445a;
 
-  --text-1: #ecedef;
-  --text-2: #9aa0a9;
-  --text-3: #676d77;
-  --text-inverse: var(--neutral-950);
+  --text-1: #e8eef6;
+  --text-2: #9aabbf;
+  --text-3: #71839a;
+  --text-inverse: #0b1017;
 
-  --accent: var(--accent-400);
-  --accent-weak: rgba(139, 156, 255, 0.12);
-  --accent-contrast: var(--neutral-950);
+  --accent: #7cc4ff;
+  --accent-contrast: #0a0d12;
 
-  --done: var(--green-400);
-  --done-weak: rgba(95, 191, 138, 0.12);
-  --held: var(--amber-400);
-  --held-weak: rgba(200, 160, 90, 0.12);
-  --danger: var(--red-400);
-  --danger-weak: rgba(212, 102, 95, 0.12);
+  --done: #4fd1a5;
+  --held: #e3b264;
+  --danger: #ff7b72;
 
-  --focus-ring: var(--accent-400);
-  --shadow-none: none;
-  --scrim: rgba(4, 5, 6, 0.62);
+  --glow: rgba(90, 150, 255, 0.16);
+  --scrim: rgba(4, 8, 14, 0.66);
+  --shadow-color: rgba(0, 0, 0, 0.55);
+  --highlight-color: rgba(255, 255, 255, 0.08);
 
-  --scrollbar-thumb: var(--neutral-800);
+  --scrollbar-thumb: #31445a;
 }

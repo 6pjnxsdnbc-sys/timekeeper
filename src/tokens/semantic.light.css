@@ -1,37 +1,36 @@
 /**
- * semantic (light) — 토큰 교체만으로 테마가 바뀐다.
- * 컴포넌트에는 색 리터럴이 없다 (테마 전환 붕괴 원천 봉쇄).
+ * semantic (light) — 기본 폴백 = Nordic Paper.
+ * 토큰 교체만으로 테마가 바뀐다. 컴포넌트에는 색 리터럴이 없다.
  */
 [data-theme='light'] {
   color-scheme: light;
 
-  --bg: var(--neutral-25);
-  --surface: var(--neutral-0);
-  --surface-raised: var(--neutral-0);
-  --surface-sunken: var(--neutral-50);
+  --bg: #f6f3ec;
+  --surface: #fffdf9;
+  --surface-raised: #ffffff;
+  --surface-sunken: #efeae0;
+  --surface-hover: #f8f4ec;
 
-  --border: var(--neutral-100);
-  --border-strong: var(--neutral-200);
+  --border-subtle: #eae3d6;
+  --border: #ded6c7;
+  --border-strong: #c8bda9;
 
-  --text-1: var(--neutral-975);
-  --text-2: var(--neutral-600);
-  --text-3: var(--neutral-400);
-  --text-inverse: var(--neutral-0);
+  --text-1: #1c1a17;
+  --text-2: #5f594e;
+  --text-3: #736c60;
+  --text-inverse: #fffdf9;
 
-  --accent: var(--accent-600);
-  --accent-weak: rgba(74, 92, 214, 0.08);
-  --accent-contrast: var(--neutral-0);
+  --accent: #2f4fd0;
+  --accent-contrast: #ffffff;
 
-  --done: var(--green-600);
-  --done-weak: rgba(47, 143, 99, 0.1);
-  --held: var(--amber-700);
-  --held-weak: rgba(138, 106, 34, 0.1);
-  --danger: var(--red-600);
-  --danger-weak: rgba(180, 64, 58, 0.08);
+  --done: #2c7a5a;
+  --held: #94651a;
+  --danger: #b23c34;
 
-  --focus-ring: var(--accent-600);
-  --shadow-none: none;
-  --scrim: rgba(16, 17, 20, 0.32);
+  --glow: rgba(47, 79, 208, 0.07);
+  --scrim: rgba(32, 28, 21, 0.3);
+  --shadow-color: rgba(74, 62, 44, 0.14);
+  --highlight-color: rgba(255, 255, 255, 0.75);
 
-  --scrollbar-thumb: var(--neutral-300);
+  --scrollbar-thumb: #c8bda9;
 }

@@ -1,18 +1,26 @@
 /**
  * typography — 크기·행간·자간·굵기를 각각의 변수로 둔다.
  * 실제 적용 조합은 ui 컴포넌트가 var(...) 로 조립한다.
+ *
+ * `--font-display` / `--font-meta` 는 타이포 무드(themes.ts)가 바꾸는 역할 변수다.
+ * 제목은 display, 숫자·라벨은 meta — 무드를 바꿔도 구조는 그대로다.
  */
 :root {
   --font-sans:
     'Pretendard Variable', Pretendard, -apple-system, 'SF Pro Text', 'Apple SD Gothic Neo',
     system-ui, sans-serif;
+  --font-mono:
+    'SF Mono', SFMono-Regular, ui-monospace, 'JetBrains Mono', 'IBM Plex Mono', Menlo, Consolas,
+    monospace;
+  --font-display: var(--font-sans);
+  --font-meta: var(--font-sans);
   --font-num-feature: 'tnum' 1, 'lnum' 1;
 
   /* display — 날짜, Focus Mode 제목 */
   --text-display-size: 28px;
-  --text-display-line: 1.25;
-  --text-display-weight: 600;
-  --text-display-tracking: -0.02em;
+  --text-display-line: 1.2;
+  --text-display-weight: 650;
+  --text-display-tracking: -0.025em;
 
   /* title — 화면 제목 */
   --text-title-size: 20px;
@@ -24,7 +32,7 @@
   --text-headline-size: 17px;
   --text-headline-line: 1.4;
   --text-headline-weight: 600;
-  --text-headline-tracking: -0.01em;
+  --text-headline-tracking: -0.012em;
 
   /* body — 본문·카드 메타 */
   --text-body-size: 15px;
@@ -49,4 +57,7 @@
   --text-micro-line: 1.35;
   --text-micro-weight: 500;
   --text-micro-tracking: 0.02em;
+
+  /* overline — 섹션 위 작은 라벨. 무드가 자간을 바꾼다 */
+  --label-tracking: 0.01em;
 }

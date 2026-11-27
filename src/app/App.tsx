@@ -1,5 +1,5 @@
 /**
- * App — 조립만 한다 (설계서 2.1). store·테마·단축키·토스트를 화면에 연결한다.
+ * App — 조립만 한다 (설계서 2.1). store·화면 설정·단축키·토스트를 화면에 연결한다.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ItemId } from '@core/schema/current';
@@ -21,7 +21,7 @@ interface ToastState {
 }
 
 export function App() {
-  const { mode, setMode } = useTheme();
+  const { studio, setStudio, resetStudio, view, setView } = useTheme();
   const route = useRoute();
   const store = useMemo(
     () => createAppStore({ storage: createPersistedStore(browserKeyValue()) }),
@@ -122,8 +122,11 @@ export function App() {
       <TodayScreen
         data={data}
         today={today}
-        theme={mode}
-        onThemeChange={setMode}
+        studio={studio}
+        view={view}
+        onStudioChange={setStudio}
+        onStudioReset={resetStudio}
+        onViewChange={setView}
         onOpenCapture={() => setCaptureOpen(true)}
         onPromote={onPromote}
         onDemote={onDemote}

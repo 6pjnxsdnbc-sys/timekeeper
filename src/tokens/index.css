@@ -1,6 +1,9 @@
 /**
  * tokens — 레이어 1. import 순서가 곧 우선순위다.
- * primitive → semantic(dark) → semantic(light) → typography → space → motion
+ * primitive → semantic(dark) → semantic(light) → typography → space → motion → component
+ *
+ * component 가 마지막인 이유: semantic 파생색(--accent-weak 등)과
+ * 카드·타이포 역할 변수가 위 정의를 덮어써야 한다.
  *
  * 이 파일 밖에서는 색·간격·모션의 리터럴을 쓰지 않는다.
  */
@@ -10,3 +13,4 @@
 @import './typography.css';
 @import './space.css';
 @import './motion.css';
+@import './component.css';

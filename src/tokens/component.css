@@ -1,0 +1,45 @@
+/**
+ * component — 의미 토큰을 부품 어휘로 한 단계 더 좁힌 별칭 (3계층의 3단).
+ * 파생색은 color-mix 로만 만든다 — 액센트 하나를 바꾸면 약한 배경·테두리·
+ * 포커스 링이 함께 따라온다.
+ *
+ * 카드 질감(Surface Style)과 타이포 무드는 themes.ts 가 같은 이름을 덮어쓴다.
+ */
+:root {
+  --accent-weak: color-mix(in srgb, var(--accent) 14%, transparent);
+  --accent-soft: color-mix(in srgb, var(--accent) 26%, transparent);
+  --accent-line: color-mix(in srgb, var(--accent) 55%, transparent);
+  --done-weak: color-mix(in srgb, var(--done) 14%, transparent);
+  --held-weak: color-mix(in srgb, var(--held) 14%, transparent);
+  --danger-weak: color-mix(in srgb, var(--danger) 14%, transparent);
+  --focus-ring: var(--accent);
+
+  /* 표면 계층 — 카드 */
+  --card-bg: var(--surface);
+  --card-border-color: var(--border);
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --card-blur: none;
+  --card-highlight: transparent;
+
+  /* 표면 계층 — 바·입력·칩 */
+  --bar-bg: color-mix(in srgb, var(--bg) 80%, transparent);
+  --field-bg: var(--surface-sunken);
+  --chip-bg: color-mix(in srgb, var(--text-1) 4%, transparent);
+  --chip-border: color-mix(in srgb, var(--text-1) 9%, transparent);
+  --slot-bg: color-mix(in srgb, var(--surface-sunken) 72%, transparent);
+  --hairline-subtle: color-mix(in srgb, var(--border) 65%, transparent);
+
+  /* 떠 있는 면 (시트·토스트·스튜디오) */
+  --elevation-pop: 0 1px 2px var(--shadow-color), 0 32px 64px -32px var(--shadow-color);
+  --elevation-bar: 0 1px 0 var(--border-subtle);
+
+  /* 글꼴 역할 — 타이포 무드가 덮어쓴다 */
+  --font-display: var(--font-sans);
+  --font-meta: var(--font-sans);
+  --label-tracking: 0.01em;
+
+  /* 화면 골격 */
+  --bar-h: 60px;
+  --tray-max: 760px;
+}

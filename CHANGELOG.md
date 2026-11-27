@@ -13,6 +13,22 @@
 - 최소 셸: 오늘 화면 + 테마 토글(시스템/다크/라이트)
 - GitHub Actions: verify(PR·push) → Pages deploy(main)
 
+## 0.3.0 — UI 전면 고도화 · 테마 6종 · 스튜디오 · 뷰 3종 (2026-11-27)
+
+- **테마 프셋 6종** (`src/tokens/themes.ts`) — Midnight Slate · Warm Espresso · Forest Moss · Nordic Paper · Soft Mist · Obsidian Mono
+  - semantic 변수 20개를 프리셋마다 정의, `useLayoutEffect` 로 첫 페인트 전 적용 (깜빡임 없음)
+  - 본문 대비 4.5:1 게이트를 테스트로 강제 (`src/tests/ui/themes.test.ts`)
+- **화면·테마 스튜디오** (`features/theme/ThemeStudio`) — 상단 ◐ 버튼으로 열리는 모달/시트
+  - 프리셋 원클릭, 액센트 10색 스와치 + `<input type="color">`, 카드 질감 Flat/Elevated/Glass,
+    곡률 Sharp/Smooth/Round, 폰트 무드 Clean Sans/Editorial/Mono accent, 밀도 Relaxed/Balanced/Compact
+  - 전부 `localStorage`(`timekeeper.studio`)에 즉시 저장, `[기본값 초기화]` 지원
+- **뷰 3종** — 집중 카드 / 컴팩트 리스트 / 스플릿 보드(데스크톱 3열, 모바일 세그먼트 탭)
+  - 선택은 `timekeeper.view` 에 저장, 스위처는 상단 바
+- **표면 계층 정리** — `bg / surface / surface-raised / surface-sunken / surface-hover`,
+  파생색은 `color-mix`, 그림자·하이라이트는 프리셋 값. 점선 빈 슬롯 → 조용한 플레이스홀더
+- **부품** — `Icon`(선 1.6px 세트) · 카드/한 줄 `ItemCard` 두 변형 · 분류 도트 4색 · 오버레이 Esc·스크롤 잠금
+- 기존 F1 로직·4레이어 경계 그대로 (core 변경 0, `.github/workflows/deploy.yml` 변경 0)
+
 ## 0.2.0 — F1 핵심 루프 (2026-11-27)
 
 - **QuickCapture** — `+` · `⌘K`/`Ctrl+K` → 한 줄 입력, Enter 저장, 실시간 해석 1줄

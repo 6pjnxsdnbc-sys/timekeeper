@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Context, LocalDate } from '@core/schema/current';
 import { STRINGS, parseCapture } from '@core';
 import { Overlay } from '@ui/primitives/Overlay';
+import { Icon } from '@ui/primitives/Icon';
 import './QuickCapture.css';
 
 export interface QuickCaptureProps {
@@ -27,13 +28,13 @@ export function QuickCapture({ open, today, contexts, onClose, onSubmit }: Quick
     return () => cancelAnimationFrame(frame);
   }, [open]);
 
-  const preview = useMemo(() => {
+  const parts = useMemo(() => {
     if (!text.trim()) return null;
-    return parseCapture(text, { today, contexts }).parts.join(' · ');
+    return parseCapture(text, { today, contexts }).parts;
   }, [text, today, contexts]);
 
   return (
-    <Overlay open={open} onClose={onClose} label={STRINGS.capture.title}>
+    <Overlay open={open} onClose={onClose} label={STRINGS.capture.title} placement="center">
       <form
         className="quick"
         onSubmit={(event) => {
@@ -41,34 +42,46 @@ export function QuickCapture({ open, today, contexts, onClose, onSubmit }: Quick
           if (!text.trim()) return;
           onSubmit(text);
         }}
-        onKeyDown={(event) => {
-          if (event.key === 'Escape') {
-            event.preventDefault();
-            onClose();
-          }
-        }}
       >
         <div className="quick__head">
           <h2 className="quick__title">{STRINGS.capture.title}</h2>
-          <button type="button" className="quick__close" onClick={onClose} aria-label={STRINGS.capture.close}>
-            ✕
+          <button
+            type="button"
+            className="quick__close"
+            onClick={onClose}
+            aria-label={STRINGS.capture.close}
+          >
+            <Icon name="x" size={16} />
           </button>
         </div>
 
-        <input
-          ref={inputRef}
-          className="quick__input"
-          value={text}
-          onChange={(event) => setText(event.target.value)}
-          placeholder={STRINGS.capture.placeholder}
-          aria-label={STRINGS.capture.placeholder}
-          autoComplete="off"
-          enterKeyHint="done"
-        />
+        <div className="quick__field">
+          <span className="quick__field-icon" aria-hidden="true">
+            <Icon name="plus" size={16} />
+          </span>
+          <input
+            ref={inputRef}
+            className="quick__input"
+            value={text}
+            onChange={(event) => setText(event.target.value)}
+            placeholder={STRINGS.capture.placeholder}
+            aria-label={STRINGS.capture.placeholder}
+            autoComplete="off"
+            enterKeyHint="done"
+          />
+        </div>
 
-        <p className={`quick__preview${preview ? '' : ' quick__preview--idle'}`} aria-live="polite">
-          {preview ?? STRINGS.capture.emptyPreview}
-        </p>
+        <div className="quick__preview" aria-live="polite">
+          {parts && parts.length > 0 ? (
+            parts.map((part) => (
+              <span key={part} className="quick__chip">
+                {part}
+              </span>
+            ))
+          ) : (
+            <span className="quick__chip quick__chip--idle">{STRINGS.capture.emptyPreview}</span>
+          )}
+        </div>
 
         <div className="quick__foot">
           <span className="quick__keys">{STRINGS.capture.example}</span>

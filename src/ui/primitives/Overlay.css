@@ -5,13 +5,14 @@
   display: flex;
   padding: var(--space-5);
   background: var(--scrim);
+  backdrop-filter: blur(3px);
   animation: overlay-in var(--dur-fast) var(--ease-standard);
 }
 
 .overlay--center {
   align-items: flex-start;
   justify-content: center;
-  padding-top: min(18vh, 160px);
+  padding-top: min(12vh, 120px);
 }
 
 .overlay--bottom {
@@ -22,10 +23,18 @@
 .overlay__panel {
   width: 100%;
   max-width: 560px;
-  border: var(--hairline) solid var(--border-strong);
+  max-height: calc(100vh - min(18vh, 180px));
+  overflow: auto;
+  border: var(--hairline) solid var(--border);
   border-radius: var(--radius-xl);
   background: var(--surface-raised);
+  box-shadow: var(--elevation-pop);
   animation: panel-in var(--dur-base) var(--ease-enter);
+  overscroll-behavior: contain;
+}
+
+.overlay__panel--lg {
+  max-width: 780px;
 }
 
 @keyframes overlay-in {
@@ -40,22 +49,28 @@
 @keyframes panel-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(10px) scale(0.99);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 @media (max-width: 759px) {
+  .overlay {
+    padding: 0;
+  }
+
   .overlay--center {
     align-items: flex-end;
     padding: 0;
   }
 
-  .overlay--center .overlay__panel {
+  .overlay__panel,
+  .overlay__panel--lg {
     max-width: none;
+    max-height: 88vh;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }

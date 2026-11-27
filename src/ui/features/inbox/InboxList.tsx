@@ -4,6 +4,7 @@
  */
 import type { ItemId } from '@core/schema/current';
 import { STRINGS, type BoardView } from '@core';
+import { Icon } from '@ui/primitives/Icon';
 import './InboxList.css';
 
 export interface InboxListProps {
@@ -14,11 +15,14 @@ export interface InboxListProps {
 }
 
 export function InboxList({ view, expanded, onToggleMore, onPromote }: InboxListProps) {
+  const total = view.candidates.length + view.hiddenCandidateCount;
+
   return (
     <section className="inbox" aria-label={STRINGS.inbox.title}>
       <header className="inbox__head">
         <h2 className="inbox__title">{STRINGS.inbox.title}</h2>
-        <span className="inbox__count num">{view.candidates.length + view.hiddenCandidateCount}</span>
+        <span className="inbox__count num">{total}</span>
+        {view.full ? <span className="inbox__flag">{STRINGS.board.emptySlotHint}</span> : null}
       </header>
 
       {view.candidates.length === 0 ? (
@@ -27,10 +31,16 @@ export function InboxList({ view, expanded, onToggleMore, onPromote }: InboxList
         <ul className="inbox__list">
           {view.candidates.map((candidate) => (
             <li key={candidate.item.id} className="inbox__row">
-              <div className="inbox__body">
+              <span
+                className="ctx-dot"
+                data-context={candidate.item.contextId}
+                aria-hidden="true"
+              />
+              <span className="inbox__body">
                 <span className="inbox__row-title">{candidate.item.title}</span>
                 <span className="inbox__meta">
-                  <span className="inbox__context">{candidate.meta.contextLabel}</span>
+                  <span>{candidate.meta.contextLabel}</span>
+                  <span className="inbox__sep" aria-hidden="true" />
                   <span className="num">{candidate.meta.estimateLabel}</span>
                   {candidate.meta.estimateAssumed ? (
                     <span className="inbox__assumed">{STRINGS.card.assumed}</span>
@@ -41,15 +51,17 @@ export function InboxList({ view, expanded, onToggleMore, onPromote }: InboxList
                     </span>
                   ))}
                 </span>
-              </div>
+              </span>
               <button
                 type="button"
                 className="inbox__add"
                 onClick={() => onPromote(candidate.item.id)}
                 disabled={view.full}
                 aria-label={`${candidate.item.title} ${STRINGS.inbox.addToToday}`}
+                title={STRINGS.inbox.addToToday}
               >
-                {STRINGS.inbox.addToToday}
+                <Icon name="plus" size={13} />
+                <span className="inbox__add-label">{STRINGS.inbox.addToToday}</span>
               </button>
             </li>
           ))}

@@ -6,12 +6,14 @@
 
 .board__head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: var(--space-2);
 }
 
 .board__title {
   margin: 0;
+  color: var(--text-1);
+  font-family: var(--font-display);
   font-size: var(--text-title-size);
   line-height: var(--text-title-line);
   font-weight: var(--text-title-weight);
@@ -19,10 +21,15 @@
 }
 
 .board__count {
-  color: var(--text-3);
-  font-size: var(--text-caption-size);
-  line-height: var(--text-caption-line);
-  letter-spacing: var(--text-caption-tracking);
+  padding: 1px 8px;
+  border: var(--hairline) solid var(--chip-border);
+  border-radius: var(--radius-pill);
+  background: var(--chip-bg);
+  color: var(--text-2);
+  font-family: var(--font-meta);
+  font-size: var(--text-micro-size);
+  line-height: 16px;
+  letter-spacing: var(--label-tracking);
 }
 
 .board__cards {
@@ -34,19 +41,27 @@
   gap: var(--gap-card);
 }
 
+/* 빈 자리 — 점선 박스가 아니라 조용한 자리 표시 */
 .board__slot {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 84px;
-  padding: var(--pad-card);
+  min-height: calc(var(--card-min-h) * 0.72);
+  padding: 0 var(--pad-card);
+  border-radius: var(--radius-lg);
+  background: var(--slot-bg);
   color: var(--text-3);
 }
 
-.board__slot-index {
-  min-width: 14px;
-  font-size: var(--text-caption-size);
-  line-height: var(--text-caption-line);
+.board__slot-plus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--chip-bg);
+  color: var(--text-3);
 }
 
 .board__slot-label {
@@ -59,12 +74,12 @@
   color: var(--text-3);
   font-size: var(--text-micro-size);
   line-height: var(--text-micro-line);
-  letter-spacing: var(--text-micro-tracking);
+  letter-spacing: var(--label-tracking);
 }
 
 .board__note {
   margin: 0;
-  color: var(--text-2);
+  color: var(--text-3);
   font-size: var(--text-body-sm-size);
   line-height: var(--text-body-sm-line);
 }
@@ -74,19 +89,38 @@
 }
 
 .board__empty-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   align-self: flex-start;
   margin-top: var(--space-1);
-  min-height: calc(var(--tap-min) - 4px);
+  min-height: 36px;
   padding: 0 var(--space-4);
   border: var(--hairline) solid var(--border-strong);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--text-1);
-  font-size: var(--text-body-sm-size);
+  font-size: var(--text-caption-size);
+  line-height: 1;
   cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    background var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard);
 }
 
 .board__empty-action:hover {
   border-color: var(--accent);
   color: var(--accent);
+  background: var(--accent-weak);
+}
+
+/* 리스트 모드에서는 카드 사이 간격을 줄인다 */
+.board--list .board__cards {
+  gap: 0;
+}
+
+.board--list .board__slot {
+  min-height: 48px;
+  margin-top: 2px;
 }

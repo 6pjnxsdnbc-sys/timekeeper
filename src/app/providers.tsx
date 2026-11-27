@@ -1,85 +1,87 @@
 /**
- * 테마 공급자 — 토큰 교체만 한다. 화면은 mode 를 모르고 resolved 만 그린다.
- * 저장은 localStorage 한 줄(첫 페인트 전 부트스트랩과 같은 키) 이다.
+ * 테마·화면 공급자 — 스튜디오 상태를 들고, 토큰만 교체한다.
+ * 화면은 색을 모르고 값만 올린다. 적용은 useLayoutEffect 라 첫 페인트 전에 끝난다.
  */
 import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
   type ReactNode,
 } from 'react';
-import type { Settings } from '@core/schema/current';
+import type { ThemeId, ThemeModeName, ThemePreset } from '@tokens/themes';
+import { themeById } from '@tokens/themes';
+import type { ThemeStudio } from './themeStudio';
+import { applyStudio, defaultStudio, readStudio, saveStudio } from './themeStudio';
+import type { ViewMode } from './viewMode';
+import { readViewMode, saveViewMode } from './viewMode';
 
-export type ThemeMode = Settings['theme'];
-export type ResolvedTheme = 'dark' | 'light';
+/** 예전 이름 호환 — 화면은 해석된 밝기만 알면 된다. */
+export type ResolvedTheme = ThemeModeName;
+export type ThemeMode = ThemeModeName;
 
-const STORAGE_KEY = 'timekeeper.theme';
-const DARK_QUERY = '(prefers-color-scheme: dark)';
-
-function isThemeMode(value: unknown): value is ThemeMode {
-  return value === 'system' || value === 'dark' || value === 'light';
+interface DisplayContextValue {
+  studio: ThemeStudio;
+  preset: ThemePreset;
+  mode: ThemeModeName;
+  setStudio: (patch: Partial<ThemeStudio>) => void;
+  setTheme: (id: ThemeId) => void;
+  resetStudio: () => void;
+  view: ViewMode;
+  setView: (mode: ViewMode) => void;
 }
 
-function readStoredMode(): ThemeMode {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return isThemeMode(stored) ? stored : 'system';
-  } catch {
-    return 'system';
-  }
-}
-
-function systemPrefersDark(): boolean {
-  return typeof matchMedia === 'function' && matchMedia(DARK_QUERY).matches;
-}
-
-interface ThemeContextValue {
-  mode: ThemeMode;
-  resolved: ResolvedTheme;
-  setMode: (mode: ThemeMode) => void;
-}
-
-const ThemeContext = createContext<ThemeContextValue | null>(null);
+const DisplayContext = createContext<DisplayContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<ThemeMode>(readStoredMode);
-  const [systemDark, setSystemDark] = useState<boolean>(systemPrefersDark);
+  const [studio, setStudioState] = useState<ThemeStudio>(readStudio);
+  const [view, setViewState] = useState<ViewMode>(readViewMode);
 
-  useEffect(() => {
-    if (typeof matchMedia !== 'function') return;
-    const query = matchMedia(DARK_QUERY);
-    const onChange = (event: MediaQueryListEvent) => setSystemDark(event.matches);
-    query.addEventListener('change', onChange);
-    return () => query.removeEventListener('change', onChange);
+  // 첫 페인트 전에 토큰을 심는다 — 새로고침해도 깜빡임이 없다.
+  useLayoutEffect(() => {
+    applyStudio(studio);
+    saveStudio(studio);
+  }, [studio]);
+
+  const setStudio = useCallback((patch: Partial<ThemeStudio>) => {
+    setStudioState((previous) => ({ ...previous, ...patch }));
   }, []);
 
-  const resolved: ResolvedTheme = mode === 'system' ? (systemDark ? 'dark' : 'light') : mode;
+  const setTheme = useCallback((id: ThemeId) => {
+    setStudioState((previous) => ({ ...previous, themeId: id }));
+  }, []);
 
-  useEffect(() => {
-    const root = document.documentElement;
-    root.dataset.theme = resolved;
-    root.dataset.themeMode = mode;
-    try {
-      localStorage.setItem(STORAGE_KEY, mode);
-    } catch {
-      // 저장소가 막혀 있어도 테마는 이번 세션 동안 동작한다.
-    }
-  }, [mode, resolved]);
+  const resetStudio = useCallback(() => {
+    setStudioState(defaultStudio());
+  }, []);
 
-  const setModeStable = useCallback((next: ThemeMode) => setMode(next), []);
-  const value = useMemo<ThemeContextValue>(
-    () => ({ mode, resolved, setMode: setModeStable }),
-    [mode, resolved, setModeStable],
+  const setView = useCallback((mode: ViewMode) => {
+    setViewState(mode);
+    saveViewMode(mode);
+  }, []);
+
+  const preset = themeById(studio.themeId);
+  const value = useMemo<DisplayContextValue>(
+    () => ({
+      studio,
+      preset,
+      mode: preset.mode,
+      setStudio,
+      setTheme,
+      resetStudio,
+      view,
+      setView,
+    }),
+    [studio, preset, setStudio, setTheme, resetStudio, view, setView],
   );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return <DisplayContext.Provider value={value}>{children}</DisplayContext.Provider>;
 }
 
-export function useTheme(): ThemeContextValue {
-  const value = useContext(ThemeContext);
+export function useTheme(): DisplayContextValue {
+  const value = useContext(DisplayContext);
   if (!value) throw new Error('useTheme must be used inside <ThemeProvider>');
   return value;
 }

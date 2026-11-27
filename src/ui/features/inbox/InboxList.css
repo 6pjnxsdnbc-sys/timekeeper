@@ -7,22 +7,32 @@
 
 .inbox__head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: var(--space-2);
-  padding-bottom: var(--space-2);
-  border-bottom: var(--hairline) solid var(--border);
 }
 
 .inbox__title {
   margin: 0;
   color: var(--text-2);
+  font-family: var(--font-display);
   font-size: var(--text-body-sm-size);
   line-height: var(--text-body-sm-line);
   font-weight: 600;
-  letter-spacing: var(--text-body-sm-tracking);
+  letter-spacing: var(--label-tracking);
 }
 
 .inbox__count {
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  background: var(--chip-bg);
+  color: var(--text-3);
+  font-family: var(--font-meta);
+  font-size: var(--text-micro-size);
+  line-height: 16px;
+}
+
+.inbox__flag {
+  margin-left: auto;
   color: var(--text-3);
   font-size: var(--text-micro-size);
   line-height: var(--text-micro-line);
@@ -40,8 +50,14 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2) 0;
-  border-bottom: var(--hairline) solid var(--border);
+  padding: var(--row-pad-y) var(--space-2) var(--row-pad-y) var(--space-3);
+  border-radius: var(--radius-md);
+  transition: background var(--dur-fast) var(--ease-standard);
+}
+
+.inbox__row:hover,
+.inbox__row:focus-within {
+  background: var(--surface-hover);
 }
 
 .inbox__body {
@@ -49,14 +65,14 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .inbox__row-title {
-  color: var(--text-1);
-  font-size: var(--text-body-size);
-  line-height: var(--text-body-line);
   overflow: hidden;
+  color: var(--text-1);
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -65,15 +81,17 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-1) var(--space-2);
-  color: var(--text-2);
+  gap: 2px var(--space-2);
+  color: var(--text-3);
   font-size: var(--text-micro-size);
   line-height: var(--text-micro-line);
-  letter-spacing: var(--text-micro-tracking);
+  letter-spacing: var(--label-tracking);
 }
 
-.inbox__context {
-  color: var(--text-3);
+.inbox__sep {
+  width: 1px;
+  height: 9px;
+  background: var(--border);
 }
 
 .inbox__assumed {
@@ -81,61 +99,85 @@
 }
 
 .inbox__label {
-  padding-left: var(--space-2);
-  border-left: var(--hairline) solid var(--border);
+  padding: 0 6px;
+  border: var(--hairline) solid var(--chip-border);
+  border-radius: var(--radius-pill);
   color: var(--text-2);
 }
 
 .inbox__add {
   flex: none;
-  min-height: var(--tap-min);
-  padding: 0 var(--space-3);
-  border: var(--hairline) solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 30px;
+  padding: 0 9px;
+  border: var(--hairline) solid var(--chip-border);
   border-radius: var(--radius-pill);
   background: transparent;
   color: var(--text-2);
   font-size: var(--text-micro-size);
-  line-height: var(--text-micro-line);
-  letter-spacing: var(--text-micro-tracking);
+  line-height: 1;
+  letter-spacing: var(--label-tracking);
   cursor: pointer;
   transition:
-    color var(--dur-instant) var(--ease-standard),
-    border-color var(--dur-instant) var(--ease-standard),
-    background var(--dur-instant) var(--ease-standard);
+    color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard),
+    background var(--dur-fast) var(--ease-standard);
 }
 
 .inbox__add:hover:not(:disabled) {
   color: var(--accent);
-  border-color: var(--accent);
+  border-color: var(--accent-line);
   background: var(--accent-weak);
 }
 
 .inbox__add:disabled {
-  opacity: 0.35;
+  opacity: 0.3;
   cursor: default;
 }
 
-.inbox__note,
+.inbox__add-label {
+  display: inline;
+}
+
 .inbox__empty {
   margin: 0;
+  padding: var(--space-2) var(--space-3);
   color: var(--text-3);
   font-size: var(--text-micro-size);
   line-height: var(--text-micro-line);
-  letter-spacing: var(--text-micro-tracking);
+  letter-spacing: var(--label-tracking);
 }
 
 .inbox__more {
   align-self: flex-start;
   margin-top: var(--space-1);
-  padding: var(--space-1) 0;
+  margin-left: var(--space-2);
+  padding: var(--space-1) var(--space-2);
   border: 0;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--text-2);
   font-size: var(--text-micro-size);
   line-height: var(--text-micro-line);
+  letter-spacing: var(--label-tracking);
   cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-standard);
 }
 
 .inbox__more:hover {
   color: var(--text-1);
+}
+
+@media (max-width: 1100px) {
+  .inbox__add-label {
+    display: none;
+  }
+
+  .inbox__add {
+    padding: 0;
+    width: 30px;
+    justify-content: center;
+  }
 }

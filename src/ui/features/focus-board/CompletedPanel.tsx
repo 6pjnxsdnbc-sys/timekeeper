@@ -3,6 +3,7 @@
  */
 import type { Item } from '@core/schema/current';
 import { STRINGS } from '@core';
+import { Icon } from '@ui/primitives/Icon';
 import './CompletedPanel.css';
 
 export interface CompletedPanelProps {
@@ -12,7 +13,10 @@ export interface CompletedPanelProps {
 export function CompletedPanel({ items }: CompletedPanelProps) {
   return (
     <section className="done" aria-label={STRINGS.board.doneTitle}>
-      <h2 className="done__title">{STRINGS.board.doneTitle}</h2>
+      <header className="done__head">
+        <h2 className="done__title">{STRINGS.board.doneTitle}</h2>
+        {items.length > 0 ? <span className="done__count num">{items.length}</span> : null}
+      </header>
       {items.length === 0 ? (
         <p className="done__empty">{STRINGS.board.doneEmpty}</p>
       ) : (
@@ -20,7 +24,7 @@ export function CompletedPanel({ items }: CompletedPanelProps) {
           {items.map((item) => (
             <li key={item.id} className="done__row">
               <span className="done__check" aria-hidden="true">
-                ✓
+                <Icon name="check" size={11} />
               </span>
               <span className="done__label">{item.title}</span>
             </li>
