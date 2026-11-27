@@ -173,6 +173,15 @@
 }
 
 /* ── 본문 골격 ───────────────────────────────────────── */
+/* 머리말은 본문 폭에 맞춘다 — 집중/리스트는 좁은 단, 스플릿만 넓게 */
+.shell[data-view='focus'] .top__inner {
+  max-width: calc(var(--content-max) + var(--space-5) * 2);
+}
+
+.shell[data-view='list'] .top__inner {
+  max-width: calc(780px + var(--space-5) * 2);
+}
+
 .main {
   flex: 1;
   width: 100%;
@@ -239,7 +248,7 @@
 
 .hero__lede {
   margin: 0;
-  max-width: 44ch;
+  max-width: 100%;
   color: var(--text-2);
   font-size: var(--text-body-sm-size);
   line-height: var(--text-body-sm-line);

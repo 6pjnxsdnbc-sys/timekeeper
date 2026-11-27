@@ -80,6 +80,9 @@ export const STRINGS = {
   },
   board: {
     title: '오늘',
+    statCards: '카드',
+    statDone: '완료',
+    statInbox: '인박스',
     count: (used: number, max: number) => `${used}/${max}`,
     emptySlot: '빈 자리',
     emptySlotHint: '인박스에서 하나 올리기',

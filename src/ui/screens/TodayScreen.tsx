@@ -150,15 +150,15 @@ export function TodayScreen({
             <div className="hero__stats">
               <span className="stat">
                 <span className="stat__value num">{`${boardView.cards.length}/${capacity}`}</span>
-                <span className="stat__label">{STRINGS.views.paneToday}</span>
+                <span className="stat__label">{STRINGS.board.statCards}</span>
               </span>
               <span className="stat">
                 <span className="stat__value num">{boardView.completed.length}</span>
-                <span className="stat__label">{STRINGS.views.paneDone}</span>
+                <span className="stat__label">{STRINGS.board.statDone}</span>
               </span>
               <span className="stat">
                 <span className="stat__value num">{inboxTotal}</span>
-                <span className="stat__label">{STRINGS.views.paneInbox}</span>
+                <span className="stat__label">{STRINGS.board.statInbox}</span>
               </span>
             </div>
           </section>
