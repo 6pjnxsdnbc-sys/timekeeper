@@ -61,6 +61,7 @@ export function captureFromText(ctx: CaptureCtx, text: string): CaptureResult {
 
   const item: Item = { ...base };
   if (parse.estimateAssumed) item.estimateAssumed = true;
+  if (parse.pinned) item.pinnedOn = ctx.today;
   if (parse.startMin !== undefined) {
     const placement: Placement = {
       date: ctx.today,

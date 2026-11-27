@@ -53,8 +53,8 @@ describe('todayBoard — 오늘 카드 최대 3장 (M2)', () => {
       estimateMin: 30,
       status: 'inbox',
       priority: 1,
-      dueDate: TODAY,
     });
+    pinned.pinnedOn = TODAY;
     const next = promotedToToday(
       { data: { ...data, items: { ...data.items, [pinned.id]: pinned } }, today: TODAY, deps },
       pinned.id,

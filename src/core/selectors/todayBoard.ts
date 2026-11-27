@@ -50,16 +50,11 @@ function monthDay(date: LocalDate): [number, number] {
 export function selectCardMeta(item: Item, contexts: Record<string, Context>, today: LocalDate): CardMeta {
   const labels: string[] = [];
   if (item.placement?.date === today) labels.push(formatClock(item.placement.startMin));
+  if (item.pinnedOn === today) labels.push(STRINGS.card.pinned);
   const dueDate = item.kind === 'task' ? item.dueDate : undefined;
-  const priority = item.kind === 'task' ? item.priority : undefined;
   if (dueDate) {
-    if (priority === 1 && dueDate === today) {
-      labels.push(STRINGS.card.pinned);
-    } else if (dueDate === today) {
-      labels.push(STRINGS.card.dueToday);
-    } else {
-      labels.push(STRINGS.card.due(...monthDay(dueDate)));
-    }
+    if (dueDate === today) labels.push(STRINGS.card.dueToday);
+    else labels.push(STRINGS.card.due(...monthDay(dueDate)));
   }
   const estimateAssumed = item.estimateAssumed === true;
   const contextLabel =

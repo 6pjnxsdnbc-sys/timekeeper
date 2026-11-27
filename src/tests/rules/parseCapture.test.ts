@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { parseCapture } from '@core';
-import { TODAY } from '../support/fixtures';
+import { captureFromText, parseCapture, selectBoardView } from '@core';
+import { TODAY, emptyData, fixedDeps } from '../support/fixtures';
 
 const ctx = { today: TODAY };
 
@@ -71,5 +71,28 @@ describe('parseCapture — 1초 입력의 최소 파서 (M1)', () => {
     const parse = parseCapture('보고서 정리 오늘까지', ctx);
     expect(parse.dueDate).toBe(TODAY);
     expect(parse.when).toBe('today');
+  });
+});
+
+describe('capture → 오늘 보드', () => {
+  it("'!' 는 오늘 보드에 올리고 '오늘 고정'·시각 라벨을 붙인다", () => {
+    const deps = fixedDeps();
+    const result = captureFromText({ data: emptyData(), today: TODAY, deps }, '인하대 면접 준비 19시 !');
+
+    expect(result.placedOnBoard).toBe(true);
+    const view = selectBoardView(result.data, TODAY);
+    expect(view.cards).toHaveLength(1);
+    expect(view.cards[0]?.meta.labels).toContain('오늘 고정');
+    expect(view.cards[0]?.meta.labels).toContain('19:00');
+    expect(view.cards[0]?.item.status).toBe('planned');
+  });
+
+  it("'내일' 은 오늘 보드에 올리지 않고 내일 후보로 둔다", () => {
+    const deps = fixedDeps();
+    const result = captureFromText({ data: emptyData(), today: TODAY, deps }, '병원 예약 내일 30분');
+
+    expect(result.placedOnBoard).toBe(false);
+    expect(selectBoardView(result.data, TODAY).candidates).toHaveLength(0);
+    expect(selectBoardView(result.data, '2026-11-28').candidates).toHaveLength(1);
   });
 });
