@@ -387,7 +387,13 @@
 }
 
 @media (min-width: 1000px) {
+  .main--split {
+    display: flex;
+    flex-direction: column;
+  }
+
   .split {
+    flex: 1;
     display: grid;
     grid-template-columns: minmax(210px, 0.85fr) minmax(0, 1.6fr) minmax(200px, 0.8fr);
     gap: var(--space-6);
