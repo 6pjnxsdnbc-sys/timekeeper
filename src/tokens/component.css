@@ -27,7 +27,7 @@
   --field-bg: var(--surface-sunken);
   --chip-bg: color-mix(in srgb, var(--text-1) 4%, transparent);
   --chip-border: color-mix(in srgb, var(--text-1) 9%, transparent);
-  --slot-bg: color-mix(in srgb, var(--surface-sunken) 72%, transparent);
+  --slot-bg: color-mix(in srgb, var(--surface-sunken) 84%, transparent);
   --hairline-subtle: color-mix(in srgb, var(--border) 65%, transparent);
 
   /* 떠 있는 면 (시트·토스트·스튜디오) */

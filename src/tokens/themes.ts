@@ -360,8 +360,8 @@ export const SURFACE_OPTIONS: readonly SurfaceOption[] = [
     name: 'Glass',
     hint: '반투명 블러 · 하이라이트',
     vars: {
-      '--card-bg': 'color-mix(in srgb, var(--surface) 58%, transparent)',
-      '--card-border-color': 'color-mix(in srgb, var(--text-1) 11%, transparent)',
+      '--card-bg': 'color-mix(in srgb, var(--surface) 72%, transparent)',
+      '--card-border-color': 'color-mix(in srgb, var(--text-1) 14%, transparent)',
       '--card-shadow': '0 1px 1px var(--shadow-color), 0 22px 44px -26px var(--shadow-color)',
       '--card-shadow-hover':
         '0 2px 6px var(--shadow-color), 0 30px 60px -28px var(--shadow-color)',
