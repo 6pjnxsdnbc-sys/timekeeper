@@ -30,6 +30,14 @@ describe('parseCapture — 1초 입력의 최소 파서 (M1)', () => {
     expect(parse.parts).toContain('19:00');
   });
 
+  it("'19시 30분' 은 19:00 시작 + 30분 소요로 읽는다 (소요를 잃지 않는다)", () => {
+    const parse = parseCapture('논술 첨삭 19시 30분', ctx);
+    expect(parse.startMin).toBe(19 * 60);
+    expect(parse.estimateMin).toBe(30);
+    expect(parse.estimateAssumed).toBe(false);
+    expect(parse.title).toBe('논술 첨삭');
+  });
+
   it("'1시간 30분' 을 90분으로 읽는다 (시각으로 오해하지 않는다)", () => {
     const parse = parseCapture('운동 /운동 1시간 30분', ctx);
     expect(parse.contextId).toBe('workout');

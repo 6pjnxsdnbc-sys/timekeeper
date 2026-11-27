@@ -127,11 +127,23 @@ export function parseCapture(raw: string, input: CaptureParseInput): CapturePars
     return ' ';
   });
 
-  // 5) 시각 — 19시, 저녁 7시 30분, 19:30
-  const clockWord = /(오전|오후|저녁|밤|아침|새벽)?\s*(\d{1,2})\s*시(?!\s*간)(?:\s*(\d{1,2})\s*분)?/;
-  rest = rest.replace(clockWord, (whole, mark?: string, hour?: string, minute?: string) => {
+  // 5) 소요 시간 — 1시간 30분, 90분
+  rest = rest.replace(/(\d+(?:\.\d+)?)\s*시간(?:\s*(\d{1,2})\s*분)?/, (_whole, hours: string, mins?: string) => {
+    found.estimateMin = Math.round(Number(hours) * 60 + (mins === undefined ? 0 : Number(mins)));
+    return ' ';
+  });
+  if (found.estimateMin === undefined) {
+    rest = rest.replace(/(\d{1,4})\s*분/, (_whole, mins: string) => {
+      found.estimateMin = Number(mins);
+      return ' ';
+    });
+  }
+
+  // 6) 시각 — 19시, 저녁 7시, 19:30 ('19시 30분' 의 30분은 소요로 읽는다)
+  const clockWord = /(오전|오후|저녁|밤|아침|새벽)?\s*(\d{1,2})\s*시(?!\s*간)/;
+  rest = rest.replace(clockWord, (whole, mark?: string, hour?: string) => {
     if (hour === undefined) return whole;
-    const value = toStartMin(Number(hour), minute === undefined ? 0 : Number(minute), mark);
+    const value = toStartMin(Number(hour), 0, mark);
     if (value === undefined) return whole;
     if (found.startMin === undefined) found.startMin = value;
     return ' ';
@@ -141,18 +153,6 @@ export function parseCapture(raw: string, input: CaptureParseInput): CapturePars
       const value = toStartMin(Number(hour), Number(minute));
       if (value === undefined) return whole;
       found.startMin = value;
-      return ' ';
-    });
-  }
-
-  // 6) 소요 시간 — 1시간 30분, 90분
-  rest = rest.replace(/(\d+(?:\.\d+)?)\s*시간(?:\s*(\d{1,2})\s*분)?/, (_whole, hours: string, mins?: string) => {
-    found.estimateMin = Math.round(Number(hours) * 60 + (mins === undefined ? 0 : Number(mins)));
-    return ' ';
-  });
-  if (found.estimateMin === undefined) {
-    rest = rest.replace(/(\d{1,4})\s*분/, (_whole, mins: string) => {
-      found.estimateMin = Number(mins);
       return ' ';
     });
   }
