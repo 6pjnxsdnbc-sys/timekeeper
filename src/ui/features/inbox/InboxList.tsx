@@ -56,8 +56,6 @@ export function InboxList({ view, expanded, onToggleMore, onPromote }: InboxList
         </ul>
       )}
 
-      {view.full ? <p className="inbox__note">{STRINGS.board.fullHint}</p> : null}
-
       {view.hiddenCandidateCount > 0 && !expanded ? (
         <button type="button" className="inbox__more" onClick={onToggleMore}>
           {STRINGS.inbox.more(view.hiddenCandidateCount)}

@@ -180,6 +180,10 @@
 }
 
 @media (max-width: 759px) {
+  .shell__foot {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+
   .shell__date,
   .shell__dot {
     display: none;

@@ -140,6 +140,7 @@ export function App() {
           actionLabel={toast.undoable ? STRINGS.toast.undo : undefined}
           onAction={toast.undoable ? handleUndo : undefined}
           onDismiss={() => setToast(null)}
+          durationMs={toast.undoable ? 8000 : 2500}
         />
       ) : null}
     </>

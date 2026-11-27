@@ -66,6 +66,7 @@ export const STRINGS = {
   },
   card: {
     complete: '완료',
+    unsorted: '할일',
     postpone: '내일로',
     demote: '내리기',
     remove: '삭제',

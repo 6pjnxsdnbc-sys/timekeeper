@@ -5,6 +5,7 @@
 import type { AppDataV1, Context, Item, LocalDate } from '../schema/current';
 import { POLICY } from '../policy';
 import { STRINGS } from '../content/strings.ko';
+import { INBOX_CONTEXT_ID } from '../data/contexts';
 import { formatClock, formatMinutes } from '../rules/day';
 
 export interface CardMeta {
@@ -61,8 +62,12 @@ export function selectCardMeta(item: Item, contexts: Record<string, Context>, to
     }
   }
   const estimateAssumed = item.estimateAssumed === true;
+  const contextLabel =
+    item.contextId === INBOX_CONTEXT_ID
+      ? STRINGS.card.unsorted
+      : (contexts[item.contextId]?.label ?? STRINGS.card.unsorted);
   return {
-    contextLabel: contexts[item.contextId]?.label ?? STRINGS.board.title,
+    contextLabel,
     estimateLabel: item.estimateMin > 0 ? formatMinutes(item.estimateMin) : STRINGS.card.unknownEstimate,
     estimateAssumed,
     labels,
