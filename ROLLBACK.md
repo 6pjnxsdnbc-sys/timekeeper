@@ -6,6 +6,7 @@
 | 단계 | 상황 | 방법 | 소요 |
 |---|---|---|---|
 | 1 | 방금 배포가 이상하다 | Actions → 마지막 정상 run → **Re-run deploy** | ~60초 |
+| 1b | `deploy` 가 `No artifacts named "github-pages"` 로 실패 | 같은 run → **Re-run all jobs**. 아티팩트 인덱싱이 늦는 일시 오류다 (첫 배포에서 1회 발생, 재실행으로 성공) | ~1분 |
 | 2 | 코드를 되돌려야 한다 | `git revert <sha>` → push (자동 재배포) | ~2분 |
 | 3 | 여러 커밋이 엉켰다 | `git checkout <tag> && git push origin HEAD:main --force-with-lease` | ~3분 |
 
