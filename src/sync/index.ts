@@ -4,6 +4,13 @@
 export type { ChangeSet, PullResult, SyncAdapter, SyncStatus } from './adapter';
 export { createMemoryStore, type LocalStore } from './local/idb';
 export {
+  DEFAULT_DATA_KEY,
+  createMemoryKeyValue,
+  createPersistedStore,
+  type KeyValue,
+  type PersistedOptions,
+} from './local/kv';
+export {
   BACKUP_APP_ID,
   backupFileName,
   createBackup,

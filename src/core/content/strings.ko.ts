@@ -1,6 +1,8 @@
 /**
  * 화면 문구 — 로직 없음 (설계서 2.2 · 2.8).
  * "이월 버튼 이름 바꿔" 는 이 파일만 고친다.
+ *
+ * P4: 이월 횟수·실패·경고 문구는 여기에도 없다. 숫자는 화면에 나오지 않는다.
  */
 export const STRINGS = {
   app: {
@@ -19,6 +21,7 @@ export const STRINGS = {
     footerSchema: '스키마',
     footerBuild: '빌드',
     themeLabel: '테마',
+    captureShortcut: '⌘K',
   },
   theme: {
     system: '시스템',
@@ -29,5 +32,58 @@ export const STRINGS = {
   capture: {
     placeholder: '지금 떠오른 것 한 줄',
     hint: '분류는 묻지 않습니다. 저장하면 인박스로 갑니다.',
+    open: '빠른 입력',
+    title: '한 줄로 적기',
+    save: '저장',
+    close: '닫기',
+    keys: 'Enter 저장 · Esc 닫기',
+    example: '예: 인하대 논술 2번 재작성 /공부 1시간 !',
+    untitled: '제목 없음',
+    assumed: '기본',
+    pinned: '오늘 고정',
+    today: '오늘',
+    tomorrow: '내일',
+    due: (month: number, day: number) => `${month}/${day} 마감`,
+    emptyPreview: '제목만 적어도 저장됩니다.',
+  },
+  board: {
+    title: '오늘',
+    count: (used: number, max: number) => `${used}/${max}`,
+    emptySlot: '빈 자리',
+    emptySlotHint: '인박스에서 하나 올리기',
+    fullHint: '오늘 카드는 세 개까지예요. 하나를 내리면 올릴 수 있어요.',
+    extraOffer: '여유가 생겼어요 · 인박스에서 하나 더?',
+    doneTitle: '오늘 한 것',
+    doneEmpty: '아직 비어 있어요.',
+    allDone: '오늘 카드를 다 정리했어요.',
+  },
+  inbox: {
+    title: '인박스',
+    empty: '인박스가 비어 있어요.',
+    more: (count: number) => `${count}개 더 보기`,
+    fold: '접기',
+    addToToday: '오늘로',
+  },
+  card: {
+    complete: '완료',
+    postpone: '내일로',
+    demote: '내리기',
+    remove: '삭제',
+    removeLabel: (title: string) => `${title} 삭제`,
+    pinned: '오늘 고정',
+    due: (month: number, day: number) => `${month}/${day} 마감`,
+    dueToday: '오늘 마감',
+    assumed: '미정',
+    unknownEstimate: '시간 미정',
+  },
+  toast: {
+    saved: '저장했어요.',
+    savedToInbox: '오늘 카드가 꽉 차서 인박스에 담았어요.',
+    completed: '완료했어요.',
+    postponed: '내일로 옮겨뒀어요.',
+    demoted: '인박스로 내렸어요.',
+    removed: '삭제했어요.',
+    undo: '되돌리기',
+    full: '오늘 카드는 세 개까지예요.',
   },
 } as const;

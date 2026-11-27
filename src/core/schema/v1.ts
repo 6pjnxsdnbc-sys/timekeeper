@@ -49,7 +49,9 @@ export interface ItemBase {
   createdAt: Instant;
   updatedAt: Instant; // 충돌 판정 기준
   deletedAt?: Instant; // tombstone (tombstoneDays 후 purge)
-  carryCount?: number; // 내부용. 화면에 숫자로 노출하지 않는다
+  carryCount?: number; // 내부용 이월 카운터(rolloverCount). 화면에 숫자로 노출하지 않는다
+  deferUntil?: LocalDate; // '내일로' 로 미룬 항목 — 이 날짜 전까지 인박스 후보에 오르지 않는다 (F1)
+  estimateAssumed?: boolean; // 시간을 말하지 않고 저장된 기본 추정 (M1) — 카드에 '미정'으로 표시
   carriedFrom?: LocalDate[];
   splitDeclined?: boolean;
 

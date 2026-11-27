@@ -9,3 +9,48 @@ export * from './migrations';
 export * from './data/contexts';
 export * from './data/routines';
 export * from './content/strings.ko';
+
+// ── F1 규칙·셀렉터 ────────────────────────────────
+export {
+  addDays,
+  compareDate,
+  formatClock,
+  formatMinutes,
+  isBefore,
+  localDateOf,
+  logicalDate,
+  makeDate,
+  minutesOfDay,
+  wallClock,
+  type WallClock,
+} from './rules/day';
+export {
+  parseCapture,
+  type CaptureParse,
+  type CaptureParseInput,
+  type CaptureWhen,
+} from './rules/parseCapture';
+export { captureFromText, type CaptureCtx, type CaptureResult } from './rules/capture';
+export {
+  activeCards,
+  completedOnBoard,
+  demotedToInbox,
+  postponedToTomorrow,
+  promotedToToday,
+  removedItem,
+  restoredItem,
+  todaySnapshot,
+  ON_BOARD_STATUSES,
+  type BoardCtx,
+  type BoardFailure,
+  type BoardResult,
+} from './rules/todayBoard';
+export { hasRunOn, runRollover, type RolloverCtx, type RolloverResult } from './rules/rollover';
+export {
+  selectBoardView,
+  selectCardMeta,
+  type BoardView,
+  type BoardViewOptions,
+  type CardMeta,
+  type CardView,
+} from './selectors/todayBoard';

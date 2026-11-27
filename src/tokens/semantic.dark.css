@@ -32,6 +32,7 @@
 
   --focus-ring: var(--accent-400);
   --shadow-none: none;
+  --scrim: rgba(4, 5, 6, 0.62);
 
   --scrollbar-thumb: var(--neutral-800);
 }

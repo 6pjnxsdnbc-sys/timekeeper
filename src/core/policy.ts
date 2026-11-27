@@ -14,6 +14,7 @@ export const POLICY = {
   breakTimerMin: 5,
   carrySplitThreshold: 3, // M5
   nowPickCount: 2, // M3
+  inboxVisibleLimit: 12, // 인박스 접힌 목록 — 넘으면 '더 보기'
 
   // ── 하루 경계 ─────────────────────────────────
   dayStartHour: 4, // 04:00 — 새벽 작업을 '어제'로 묶는다 + 피로 리셋 시점

@@ -31,6 +31,7 @@
 
   --focus-ring: var(--accent-600);
   --shadow-none: none;
+  --scrim: rgba(16, 17, 20, 0.32);
 
   --scrollbar-thumb: var(--neutral-300);
 }

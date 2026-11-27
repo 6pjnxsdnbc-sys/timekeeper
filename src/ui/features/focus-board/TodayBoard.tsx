@@ -1,0 +1,74 @@
+/**
+ * TodayBoard — 오늘 카드 최대 3장 (설계서 1.4 M2 · 5.7).
+ * 3장이 차면 안내만 하고, 빈 칸은 "빈 자리"로 남긴다. 자동 추가는 없다.
+ */
+import type { ItemId } from '@core/schema/current';
+import { STRINGS, type BoardView } from '@core';
+import { Card } from '@ui/primitives/Card';
+import { EmptyState } from '@ui/patterns/EmptyState';
+import { ItemCard } from '@ui/patterns/ItemCard';
+import './TodayBoard.css';
+
+export interface TodayBoardProps {
+  view: BoardView;
+  onComplete: (id: ItemId) => void;
+  onPostpone: (id: ItemId) => void;
+  onDemote: (id: ItemId) => void;
+  onRemove: (id: ItemId) => void;
+  onOpenCapture: () => void;
+}
+
+export function TodayBoard({ view, onComplete, onPostpone, onDemote, onRemove, onOpenCapture }: TodayBoardProps) {
+  const isEmptyDay = view.cards.length === 0 && view.completed.length === 0 && view.candidates.length === 0;
+  const slots = Array.from({ length: view.emptySlots }, (_, index) => index);
+
+  return (
+    <section className="board" aria-label={STRINGS.board.title}>
+      <header className="board__head">
+        <h2 className="board__title">{STRINGS.board.title}</h2>
+        <span className="board__count num" aria-label={`${view.cards.length} / ${view.capacity}`}>
+          {STRINGS.board.count(view.cards.length, view.capacity)}
+        </span>
+      </header>
+
+      {isEmptyDay ? (
+        <EmptyState
+          title={STRINGS.shell.emptyBoardTitle}
+          body={STRINGS.shell.emptyBoardBody}
+          hint={STRINGS.capture.hint}
+          action={
+            <button type="button" className="board__empty-action" onClick={onOpenCapture}>
+              {STRINGS.shell.emptyBoardAction}
+            </button>
+          }
+        />
+      ) : (
+        <ul className="board__cards">
+          {view.cards.map((card) => (
+            <li key={card.item.id}>
+              <ItemCard
+                card={card}
+                onComplete={onComplete}
+                onPostpone={onPostpone}
+                onDemote={onDemote}
+                onRemove={onRemove}
+              />
+            </li>
+          ))}
+          {slots.map((slot) => (
+            <li key={`slot-${slot}`}>
+              <Card tone="ghost" className="board__slot">
+                <span className="board__slot-index num">{view.cards.length + slot + 1}</span>
+                <span className="board__slot-label">{STRINGS.board.emptySlot}</span>
+                <span className="board__slot-hint">{STRINGS.board.emptySlotHint}</span>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {view.fullHint ? <p className="board__note">{STRINGS.board.fullHint}</p> : null}
+      {view.extraOffer ? <p className="board__note board__note--offer">{STRINGS.board.extraOffer}</p> : null}
+    </section>
+  );
+}
