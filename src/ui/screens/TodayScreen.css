@@ -193,8 +193,12 @@
     display: none;
   }
 
-  .shell__capture-label {
+  .shell__capture {
     display: none;
+  }
+
+  .shell__inbox {
+    padding-bottom: var(--space-8);
   }
 
   .shell__fab {
