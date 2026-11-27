@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Timekeeper</title>
+    <meta name="theme-color" content="#0A0B0D" />
+    <meta name="description" content="생각난 순간 던지면, 지금 할 수 있는 세 개만 남는 시간관리 앱" />
+    <link rel="manifest" href="%BASE_URL%manifest.webmanifest" />
+    <link rel="icon" type="image/png" sizes="192x192" href="%BASE_URL%icon-192.png" />
+    <link rel="apple-touch-icon" href="%BASE_URL%icon-192.png" />
+    <script>
+      // 첫 페인트 전에 테마를 정한다 (깜빡임 방지). 토큰만 교체한다.
+      (function () {
+        try {
+          var stored = localStorage.getItem('timekeeper.theme');
+          var mode = stored === 'dark' || stored === 'light' || stored === 'system' ? stored : 'system';
+          var dark = mode === 'dark' || (mode === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+          document.documentElement.dataset.themeMode = mode;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/app/main.tsx"></script>
+  </body>
+</html>

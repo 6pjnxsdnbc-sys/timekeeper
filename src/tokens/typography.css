@@ -1,0 +1,52 @@
+/**
+ * typography — 크기·행간·자간·굵기를 각각의 변수로 둔다.
+ * 실제 적용 조합은 ui 컴포넌트가 var(...) 로 조립한다.
+ */
+:root {
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, 'SF Pro Text', 'Apple SD Gothic Neo',
+    system-ui, sans-serif;
+  --font-num-feature: 'tnum' 1, 'lnum' 1;
+
+  /* display — 날짜, Focus Mode 제목 */
+  --text-display-size: 28px;
+  --text-display-line: 1.25;
+  --text-display-weight: 600;
+  --text-display-tracking: -0.02em;
+
+  /* title — 화면 제목 */
+  --text-title-size: 20px;
+  --text-title-line: 1.35;
+  --text-title-weight: 600;
+  --text-title-tracking: -0.01em;
+
+  /* headline — 카드 제목 */
+  --text-headline-size: 17px;
+  --text-headline-line: 1.4;
+  --text-headline-weight: 600;
+  --text-headline-tracking: -0.01em;
+
+  /* body — 본문·카드 메타 */
+  --text-body-size: 15px;
+  --text-body-line: 1.55;
+  --text-body-weight: 450;
+  --text-body-tracking: 0;
+
+  /* body-sm — 보조, 배지, MVS·재보기 줄 */
+  --text-body-sm-size: 13px;
+  --text-body-sm-line: 1.5;
+  --text-body-sm-weight: 450;
+  --text-body-sm-tracking: 0;
+
+  /* caption — 라벨, 타임라인 시각 */
+  --text-caption-size: 12px;
+  --text-caption-line: 1.4;
+  --text-caption-weight: 500;
+  --text-caption-tracking: 0.01em;
+
+  /* micro — 상단 바 상태, 토스트 보조 */
+  --text-micro-size: 11px;
+  --text-micro-line: 1.35;
+  --text-micro-weight: 500;
+  --text-micro-tracking: 0.02em;
+}

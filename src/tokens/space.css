@@ -1,0 +1,31 @@
+/**
+ * space · radius · layout — 컴포넌트는 원시 스케일이 아니라
+ * 레이아웃 별칭(--pad-card 등)을 쓴다. "여백 조금 더"가 2줄이 되는 이유.
+ */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 56px;
+
+  --pad-card: var(--space-4);
+  --gap-card: var(--space-5);
+  --pad-panel: var(--space-6);
+  --gap-section: var(--space-7);
+  --gap-inline: var(--space-2);
+  --gap-stack: var(--space-3);
+
+  --radius-sm: var(--radius-1);
+  --radius-md: var(--radius-2);
+  --radius-lg: var(--radius-3);
+  --radius-xl: var(--radius-4);
+  --radius-pill: 999px;
+
+  --content-max: 560px;
+  --shell-max: 1200px;
+  --tap-min: 44px;
+}

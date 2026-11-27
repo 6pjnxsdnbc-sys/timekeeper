@@ -1,0 +1,37 @@
+/**
+ * semantic (dark) — 다크는 기본값이다. 그림자를 쓰지 않고 surface 단차로 층을 만든다.
+ * 컴포넌트 CSS 는 이 파일의 변수만 참조한다 (설계서 2.4).
+ */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: var(--neutral-950);
+  --surface: var(--neutral-925);
+  --surface-raised: var(--neutral-900);
+  --surface-sunken: var(--neutral-975);
+
+  --border: var(--neutral-850);
+  --border-strong: var(--neutral-800);
+
+  --text-1: #ecedef;
+  --text-2: #9aa0a9;
+  --text-3: #676d77;
+  --text-inverse: var(--neutral-950);
+
+  --accent: var(--accent-400);
+  --accent-weak: rgba(139, 156, 255, 0.12);
+  --accent-contrast: var(--neutral-950);
+
+  --done: var(--green-400);
+  --done-weak: rgba(95, 191, 138, 0.12);
+  --held: var(--amber-400);
+  --held-weak: rgba(200, 160, 90, 0.12);
+  --danger: var(--red-400);
+  --danger-weak: rgba(212, 102, 95, 0.12);
+
+  --focus-ring: var(--accent-400);
+  --shadow-none: none;
+
+  --scrollbar-thumb: var(--neutral-800);
+}

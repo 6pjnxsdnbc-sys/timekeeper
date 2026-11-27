@@ -1,0 +1,12 @@
+/**
+ * tokens — 레이어 1. import 순서가 곧 우선순위다.
+ * primitive → semantic(dark) → semantic(light) → typography → space → motion
+ *
+ * 이 파일 밖에서는 색·간격·모션의 리터럴을 쓰지 않는다.
+ */
+@import './primitive.css';
+@import './semantic.dark.css';
+@import './semantic.light.css';
+@import './typography.css';
+@import './space.css';
+@import './motion.css';

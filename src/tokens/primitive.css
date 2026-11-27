@@ -1,0 +1,44 @@
+/**
+ * primitive — 원시 값. 컴포넌트에서 직접 쓰지 않는다 (lint 로 차단).
+ * semantic.*.css 만 이 값을 참조한다.
+ */
+:root {
+  /* neutral ramp */
+  --neutral-0: #ffffff;
+  --neutral-25: #f7f7f8;
+  --neutral-50: #f0f1f3;
+  --neutral-100: #e6e7ea;
+  --neutral-200: #d6d8dd;
+  --neutral-300: #b9bcc3;
+  --neutral-400: #8b9099;
+  --neutral-500: #676d77;
+  --neutral-600: #5c626b;
+  --neutral-700: #3a3f47;
+  --neutral-800: #2e3238;
+  --neutral-850: #22252b;
+  --neutral-900: #191b1f;
+  --neutral-925: #121316;
+  --neutral-950: #0a0b0d;
+  --neutral-975: #101114;
+
+  /* accent (하나뿐인 유채색 계열) */
+  --accent-400: #8b9cff;
+  --accent-600: #4a5cd6;
+
+  /* 상태 3종 — 유채색은 이 셋에만 */
+  --green-400: #5fbf8a;
+  --green-600: #2f8f63;
+  --amber-400: #c8a05a;
+  --amber-700: #8a6a22;
+  --red-400: #d4665f;
+  --red-600: #b4403a;
+
+  /* 곡률 */
+  --radius-1: 6px;
+  --radius-2: 10px;
+  --radius-3: 14px;
+  --radius-4: 20px;
+
+  /* 1px 선 */
+  --hairline: 1px;
+}

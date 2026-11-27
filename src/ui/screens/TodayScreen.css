@@ -1,0 +1,83 @@
+.shell {
+  min-height: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-5) var(--space-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+}
+
+.shell__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-inline);
+}
+
+.shell__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.shell__name {
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line);
+  letter-spacing: var(--text-body-sm-tracking);
+  color: var(--text-2);
+}
+
+.shell__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-stack);
+}
+
+.today__date {
+  margin: 0;
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-line);
+  font-weight: var(--text-display-weight);
+  letter-spacing: var(--text-display-tracking);
+}
+
+.today__lede {
+  margin: calc(var(--space-2) * -1) 0 0;
+  color: var(--text-2);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line);
+}
+
+.today__empty {
+  margin-top: var(--space-3);
+}
+
+.today__slots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-card);
+}
+
+.today__slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  font-size: var(--text-caption-size);
+  letter-spacing: var(--text-caption-tracking);
+}
+
+.shell__foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-3);
+  font-size: var(--text-micro-size);
+  line-height: var(--text-micro-line);
+  letter-spacing: var(--text-micro-tracking);
+}

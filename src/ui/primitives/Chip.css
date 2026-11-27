@@ -1,0 +1,20 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  border: var(--hairline) solid var(--border);
+  color: var(--text-2);
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-line);
+  font-weight: var(--text-caption-weight);
+  letter-spacing: var(--text-caption-tracking);
+  white-space: nowrap;
+}
+
+.chip--accent {
+  color: var(--accent);
+  background: var(--accent-weak);
+  border-color: transparent;
+}
