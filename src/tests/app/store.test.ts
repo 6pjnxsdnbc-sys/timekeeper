@@ -70,6 +70,18 @@ describe('store — 명령과 영속화 (F1)', () => {
     expect(Object.values(store.getState().items)).toHaveLength(4);
   });
 
+  it('다른 탭이 저장한 내용을 다시 읽는다 (reload)', () => {
+    const kv = createMemoryKeyValue();
+    const a = makeStore(kv).store;
+    const b = makeStore(kv).store;
+
+    const created = b.capture('다른 탭에서 적은 일');
+    expect(Object.keys(a.getState().items)).toHaveLength(0);
+
+    expect(a.reload()).toBe(true);
+    expect(Object.values(a.getState().items).map((item) => item.id)).toEqual([created.itemId]);
+  });
+
   it('깨진 저장 데이터는 격리하고 빈 상태로 시작한다', () => {
     const kv = createMemoryKeyValue({ [DEFAULT_DATA_KEY]: '{ broken json' });
     const { store } = makeStore(kv);

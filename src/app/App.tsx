@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ItemId } from '@core/schema/current';
 import { SCHEMA_VERSION } from '@core/schema/current';
 import { STRINGS } from '@core/content/strings.ko';
-import { createPersistedStore } from '@sync';
+import { DEFAULT_DATA_KEY, createPersistedStore } from '@sync';
 import { QuickCapture, Toast, TodayScreen } from '@ui';
 import { APP_VERSION } from '@app/version';
 import { useTheme } from '@app/providers';
@@ -104,6 +104,15 @@ export function App() {
   useEffect(() => {
     const timer = setInterval(() => store.syncDay(), 60_000);
     return () => clearInterval(timer);
+  }, [store]);
+
+  // 같은 브라우저의 다른 탭이 저장하면 다시 읽는다 — 오래된 탭이 덮어쓰지 않게.
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === DEFAULT_DATA_KEY || event.key === null) store.reload();
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
   }, [store]);
 
   if (route !== 'today') return null;

@@ -67,6 +67,8 @@ export interface AppStore {
   canUndo(): boolean;
   /** 하루 경계를 지났으면 롤오버. 바뀌었으면 true. */
   syncDay(): boolean;
+  /** 다른 탭이 저장한 것을 다시 읽는다 (storage 이벤트). */
+  reload(): boolean;
 }
 
 function resolveTimeZone(): string {
@@ -199,5 +201,14 @@ export function createAppStore(options: AppStoreOptions): AppStore {
     },
     canUndo: () => undoData !== null,
     syncDay: () => refreshDay(),
+    reload() {
+      const stored = options.storage.load();
+      if (!stored) return false;
+      data = normalize(stored, deps, options.timezone);
+      today = logicalDate(now(), data.settings.dayStartHour);
+      undoData = null;
+      publish();
+      return true;
+    },
   };
 }
