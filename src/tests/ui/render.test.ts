@@ -77,6 +77,34 @@ describe('TodayScreen — 렌더 스모크', () => {
     expect(html).toContain('시간이 없는 것');
   });
 
+  it('빈 하루에는 샘플 하루 불러오기가 있고, 기존 데이터에는 없다', () => {
+    const html = renderToStaticMarkup(
+      createElement(TodayScreen, {
+        data: emptyData(),
+        today: TODAY,
+        studio: STUDIO,
+        view: 'dashboard',
+        onStudioChange: () => undefined,
+        onStudioReset: () => undefined,
+        onViewChange: () => undefined,
+        onOpenCapture: () => undefined,
+        onPromote: () => undefined,
+        onDemote: () => undefined,
+        onComplete: () => undefined,
+        onPostpone: () => undefined,
+        onRemove: () => undefined,
+        onSample: () => undefined,
+        schemaVersion: 1,
+        appVersion: 'test',
+      }),
+    );
+    expect(html).toContain('샘플 하루 불러오기');
+    expect(html).toContain('기존 데이터는 건드리지 않아요');
+
+    const filled = renderScreen('dashboard');
+    expect(filled.html).not.toContain('샘플 하루 불러오기');
+  });
+
   it('테마 스튜디오 진입점이 있다', () => {
     const { html } = renderScreen();
     expect(html).toContain('화면·테마 스튜디오');
