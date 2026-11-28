@@ -496,3 +496,138 @@
     gap: var(--space-5);
   }
 }
+
+/* ── F3 대시보드 (5.7 3단 그리드) ──────────────────────── */
+.main--dash {
+  max-width: 1360px;
+}
+
+.dash {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.78fr) minmax(0, 1.75fr) minmax(280px, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.dash__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.dash__col--center {
+  gap: var(--space-4);
+}
+
+.dash__col--inbox {
+  padding-right: var(--space-5);
+  border-right: var(--hairline) solid var(--hairline-subtle);
+}
+
+.dash__col--side {
+  padding-left: var(--space-5);
+  border-left: var(--hairline) solid var(--hairline-subtle);
+}
+
+.dash__timeline {
+  margin-top: var(--space-2);
+}
+
+.dash__done {
+  padding-top: var(--space-4);
+  border-top: var(--hairline) solid var(--hairline-subtle);
+}
+
+/* ── 모바일 하단 3탭 ───────────────────────────────────── */
+.mobtabs {
+  display: none;
+}
+
+@media (max-width: 1099px) {
+  .dash {
+    grid-template-columns: minmax(200px, 0.7fr) minmax(0, 1.6fr);
+  }
+
+  .dash__col--side {
+    grid-column: 1 / -1;
+    padding-left: 0;
+    border-left: 0;
+    padding-top: var(--space-4);
+    border-top: var(--hairline) solid var(--hairline-subtle);
+  }
+}
+
+@media (max-width: 899px) {
+  .main--dash {
+    padding-bottom: calc(var(--space-8) + 72px);
+  }
+
+  .dash {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .dash__col--inbox {
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: var(--hairline) solid var(--hairline-subtle);
+    padding-bottom: var(--space-4);
+  }
+
+  .dash__col--side {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .dash[data-tab='today'] .dash__timeline,
+  .dash[data-tab='today'] .dash__col--side {
+    display: none;
+  }
+
+  .dash[data-tab='timeline'] .dash__col--inbox,
+  .dash[data-tab='timeline'] .dash__col--center > .recommend,
+  .dash[data-tab='timeline'] .dash__col--center > .board,
+  .dash[data-tab='timeline'] .dash__col--side {
+    display: none;
+  }
+
+  .dash[data-tab='insight'] .dash__col--inbox,
+  .dash[data-tab='insight'] .dash__col--center {
+    display: none;
+  }
+
+  .mobtabs {
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+    z-index: 24;
+    display: inline-flex;
+    gap: 2px;
+    padding: 4px;
+    border: var(--hairline) solid var(--chip-border);
+    border-radius: var(--radius-pill);
+    background: var(--bar-bg);
+    backdrop-filter: blur(18px) saturate(150%);
+    box-shadow: var(--elevation-pop);
+    transform: translateX(-50%);
+  }
+
+  .mobtabs__btn {
+    min-height: 36px;
+    padding: 0 var(--space-4);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--text-3);
+    font-size: var(--text-caption-size);
+    line-height: 1;
+    letter-spacing: var(--label-tracking);
+    cursor: pointer;
+  }
+
+  .mobtabs__btn[aria-pressed='true'] {
+    background: var(--surface-raised);
+    color: var(--text-1);
+  }
+}

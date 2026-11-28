@@ -1,0 +1,294 @@
+.insight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.insight__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: var(--hairline) solid var(--card-border-color);
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.insight__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.insight__title {
+  margin: 0;
+  color: var(--text-1);
+  font-family: var(--font-display);
+  font-size: var(--text-body-sm-size);
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.insight__meta {
+  color: var(--text-3);
+  font-family: var(--font-meta);
+  font-size: var(--text-micro-size);
+  line-height: 1.3;
+  letter-spacing: var(--label-tracking);
+  white-space: nowrap;
+}
+
+/* ── 집중 곡선 ─────────────────────────────────────── */
+.insight__energy {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  align-items: end;
+  height: 76px;
+}
+
+.insight__bar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  height: 100%;
+}
+
+.insight__bar-fill {
+  width: 100%;
+  height: var(--level);
+  min-height: 4px;
+  border-radius: var(--radius-sm) var(--radius-sm) 2px 2px;
+  background: var(--surface-hover);
+  border-top: 2px solid var(--border-strong);
+  transition: height var(--dur-base) var(--ease-standard);
+}
+
+.insight__bar[data-active='true'] .insight__bar-fill {
+  background: var(--accent-weak);
+  border-top-color: var(--accent);
+}
+
+.insight__bar-label {
+  color: var(--text-3);
+  font-family: var(--font-meta);
+  font-size: 9.5px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.insight__bar[data-active='true'] .insight__bar-label {
+  color: var(--text-1);
+}
+
+.insight__facts {
+  display: flex;
+  gap: var(--space-5);
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: var(--hairline) solid var(--hairline-subtle);
+}
+
+.insight__fact {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.insight__fact dt {
+  color: var(--text-3);
+  font-size: var(--text-micro-size);
+  line-height: var(--text-micro-line);
+  letter-spacing: var(--label-tracking);
+}
+
+.insight__fact dd {
+  margin: 0;
+  color: var(--text-1);
+  font-family: var(--font-meta);
+  font-size: var(--text-body-sm-size);
+  line-height: 1.3;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 7일 균형 ──────────────────────────────────────── */
+.balance {
+  display: flex;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: var(--surface-sunken);
+}
+
+.balance__seg {
+  height: 100%;
+  transition: width var(--dur-base) var(--ease-standard);
+}
+
+.balance__seg[data-area='study'] {
+  background: var(--accent);
+}
+
+.balance__seg[data-area='errand'] {
+  background: var(--held);
+}
+
+.balance__seg[data-area='workout'] {
+  background: var(--done);
+}
+
+.balance__empty {
+  flex: 1;
+  background: var(--surface-sunken);
+}
+
+.insight__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.insight__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-2);
+  font-size: var(--text-micro-size);
+  line-height: 1.4;
+}
+
+.insight__dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+
+.insight__dot[data-area='study'] {
+  background: var(--accent);
+}
+
+.insight__dot[data-area='errand'] {
+  background: var(--held);
+}
+
+.insight__dot[data-area='workout'] {
+  background: var(--done);
+}
+
+.insight__row-label {
+  color: var(--text-1);
+}
+
+.insight__row-target {
+  color: var(--text-3);
+  font-family: var(--font-meta);
+  letter-spacing: var(--label-tracking);
+}
+
+.insight__row-value {
+  margin-left: auto;
+  color: var(--text-2);
+  font-family: var(--font-meta);
+  letter-spacing: var(--label-tracking);
+}
+
+.insight__note {
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: var(--hairline) solid var(--hairline-subtle);
+  color: var(--text-3);
+  font-size: var(--text-micro-size);
+  line-height: 1.5;
+}
+
+/* ── 운동 ──────────────────────────────────────────── */
+.workout__title {
+  margin: 0;
+  color: var(--text-1);
+  font-size: var(--text-body-sm-size);
+  line-height: 1.4;
+}
+
+.workout__switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  padding: 2px;
+  border: var(--hairline) solid var(--chip-border);
+  border-radius: var(--radius-pill);
+  background: var(--chip-bg);
+}
+
+.workout__opt {
+  min-height: 28px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-3);
+  font-size: var(--text-micro-size);
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-standard),
+    background var(--dur-fast) var(--ease-standard);
+}
+
+.workout__opt[aria-pressed='true'] {
+  background: var(--surface-raised);
+  color: var(--text-1);
+}
+
+.workout__hint {
+  margin: 0;
+  color: var(--text-3);
+  font-size: var(--text-micro-size);
+  line-height: 1.45;
+}
+
+.workout__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.workout__start,
+.workout__done {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 30px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-caption-size);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.workout__start {
+  border: 0;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+.workout__done {
+  border: var(--hairline) solid var(--chip-border);
+  background: transparent;
+  color: var(--text-2);
+}
+
+.workout__done:hover {
+  color: var(--done);
+  border-color: var(--done);
+  background: var(--done-weak);
+}

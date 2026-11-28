@@ -72,6 +72,15 @@ export function logicalDate(at: Instant, dayStartHour: number): LocalDate {
   return wall.hour < dayStartHour ? addDays(wall.date, -1) : wall.date;
 }
 
+/** 두 날짜 사이의 일수 (to − from). 시각·타임존과 무관하게 날짜만 센다. */
+export function daysBetween(from: LocalDate, to: LocalDate): number {
+  const [fy, fm, fd] = from.split('-').map(Number);
+  const [ty, tm, td] = to.split('-').map(Number);
+  const a = Date.UTC(fy ?? 1970, (fm ?? 1) - 1, fd ?? 1);
+  const b = Date.UTC(ty ?? 1970, (tm ?? 1) - 1, td ?? 1);
+  return Math.round((b - a) / 86_400_000);
+}
+
 export function formatClock(minutes: Minutes): string {
   if (!Number.isFinite(minutes) || minutes < 0) return '--:--';
   const whole = Math.round(minutes);

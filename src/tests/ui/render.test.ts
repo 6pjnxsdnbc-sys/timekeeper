@@ -14,7 +14,7 @@ const STUDIO = {
   density: 'balanced' as const,
 };
 
-function renderScreen(view: 'focus' | 'list' | 'split' = 'focus') {
+function renderScreen(view: 'dashboard' | 'focus' | 'list' | 'split' = 'focus') {
   const deps = fixedDeps();
   let data = emptyData();
   const captured = captureFromText({ data, today: TODAY, deps }, '인하대 논술 2번 재작성 /공부 1시간');
@@ -50,7 +50,9 @@ describe('TodayScreen — 렌더 스모크', () => {
     const { html } = renderScreen();
     expect(html).toContain('인하대 논술 2번 재작성');
     expect(html).toContain('공부');
-    expect(html).toContain('1시간');
+    expect(html).toContain('60분');
+    expect(html).toContain('지금 추천');
+    expect(html).toContain('타임라인');
     expect(html).toContain('인박스');
     expect(html).toContain('오늘로');
     expect(html).toContain('빈 자리');
@@ -64,6 +66,15 @@ describe('TodayScreen — 렌더 스모크', () => {
       expect(html).toContain('장학금 서류');
       expect(html).toContain(`data-view="${view}"`);
     }
+  });
+
+  it('F2·F3 위젯이 함께 그려진다 — 추천 이유·타임라인·7일 균형·운동', () => {
+    const { html } = renderScreen('dashboard');
+    expect(html).toContain('지금 추천');
+    expect(html).toContain('타임라인');
+    expect(html).toContain('최근 7일 균형');
+    expect(html).toContain('플랜 B');
+    expect(html).toContain('시간이 없는 것');
   });
 
   it('테마 스튜디오 진입점이 있다', () => {

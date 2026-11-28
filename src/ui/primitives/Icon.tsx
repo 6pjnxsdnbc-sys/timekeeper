@@ -15,6 +15,7 @@ export type IconName =
   | 'cards'
   | 'rows'
   | 'columns'
+  | 'grid'
   | 'contrast'
   | 'inbox'
   | 'clock';
@@ -37,6 +38,14 @@ const SHAPES: Record<IconName, ReactNode> = {
     <>
       <rect x="3.6" y="4" width="7" height="16" rx="2" />
       <rect x="13.4" y="4" width="7" height="16" rx="2" />
+    </>
+  ),
+  grid: (
+    <>
+      <rect x="3.6" y="3.8" width="7.2" height="7.2" rx="2" />
+      <rect x="13.2" y="3.8" width="7.2" height="7.2" rx="2" />
+      <rect x="3.6" y="13.2" width="7.2" height="7.2" rx="2" />
+      <rect x="13.2" y="13.2" width="7.2" height="7.2" rx="2" />
     </>
   ),
   contrast: (

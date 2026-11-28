@@ -1,0 +1,76 @@
+.energy-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: var(--hairline) solid var(--chip-border);
+  border-radius: var(--radius-pill);
+  background: var(--chip-bg);
+}
+
+.energy-switch__btn {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 40px;
+  min-height: 30px;
+  padding: 3px 8px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-3);
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-standard),
+    background var(--dur-fast) var(--ease-standard);
+}
+
+.energy-switch__btn:hover {
+  color: var(--text-1);
+}
+
+.energy-switch__btn[aria-pressed='true'] {
+  background: var(--surface-raised);
+  color: var(--text-1);
+  box-shadow: 0 1px 2px var(--shadow-color);
+}
+
+/* 높이는 액센트, 보통은 무채색, 낮음은 눈금색 — 색은 셋 중 하나에만 */
+.energy-switch__bar {
+  width: 12px;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--text-3);
+  transition: background var(--dur-fast) var(--ease-standard);
+}
+
+.energy-switch__btn[data-level='high'][aria-pressed='true'] .energy-switch__bar {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-weak);
+}
+
+.energy-switch__btn[data-level='mid'][aria-pressed='true'] .energy-switch__bar {
+  background: var(--text-2);
+}
+
+.energy-switch__btn[data-level='low'][aria-pressed='true'] .energy-switch__bar {
+  background: var(--held);
+}
+
+.energy-switch__text {
+  font-family: var(--font-meta);
+  font-size: var(--text-micro-size);
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: var(--label-tracking);
+}
+
+@media (max-width: 899px) {
+  .energy-switch__btn {
+    min-width: 34px;
+    padding: 3px 6px;
+  }
+}

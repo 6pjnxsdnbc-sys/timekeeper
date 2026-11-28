@@ -124,3 +124,47 @@
   min-height: 48px;
   margin-top: 2px;
 }
+
+/* ── 빈 화면: 샘플 하루 ───────────────────────────────── */
+.board__empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.board__sample {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-top: var(--space-4);
+  border-top: var(--hairline) dashed var(--hairline-subtle);
+}
+
+.board__sample-btn {
+  min-height: 34px;
+  padding: 0 var(--space-4);
+  border: var(--hairline) solid var(--chip-border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-2);
+  font-size: var(--text-caption-size);
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard),
+    background var(--dur-fast) var(--ease-standard);
+}
+
+.board__sample-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent-line);
+  background: var(--accent-weak);
+}
+
+.board__sample-hint {
+  color: var(--text-3);
+  font-size: var(--text-micro-size);
+  line-height: 1.4;
+  text-align: center;
+}

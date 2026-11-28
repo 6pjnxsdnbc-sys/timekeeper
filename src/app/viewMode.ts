@@ -6,7 +6,7 @@ import type { ViewMode } from '@ui';
 
 export type { ViewMode };
 
-export const VIEW_MODES: readonly ViewMode[] = ['focus', 'list', 'split'];
+export const VIEW_MODES: readonly ViewMode[] = ['dashboard', 'focus', 'list', 'split'];
 export const VIEW_STORAGE_KEY = 'timekeeper.view';
 
 export function isViewMode(value: unknown): value is ViewMode {
@@ -16,9 +16,9 @@ export function isViewMode(value: unknown): value is ViewMode {
 export function readViewMode(): ViewMode {
   try {
     const stored = localStorage.getItem(VIEW_STORAGE_KEY);
-    return isViewMode(stored) ? stored : 'focus';
+    return isViewMode(stored) ? stored : 'dashboard';
   } catch {
-    return 'focus';
+    return 'dashboard';
   }
 }
 

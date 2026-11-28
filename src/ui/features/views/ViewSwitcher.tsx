@@ -5,7 +5,7 @@ import { STRINGS } from '@core';
 import { Icon, type IconName } from '@ui/primitives/Icon';
 import './ViewSwitcher.css';
 
-export type ViewMode = 'focus' | 'list' | 'split';
+export type ViewMode = 'dashboard' | 'focus' | 'list' | 'split';
 
 interface ViewOption {
   id: ViewMode;
@@ -15,6 +15,7 @@ interface ViewOption {
 }
 
 const OPTIONS: readonly ViewOption[] = [
+  { id: 'dashboard', label: STRINGS.views.dashboard, hint: STRINGS.views.dashboardHint, icon: 'grid' },
   { id: 'focus', label: STRINGS.views.focus, hint: STRINGS.views.focusHint, icon: 'cards' },
   { id: 'list', label: STRINGS.views.list, hint: STRINGS.views.listHint, icon: 'rows' },
   { id: 'split', label: STRINGS.views.split, hint: STRINGS.views.splitHint, icon: 'columns' },

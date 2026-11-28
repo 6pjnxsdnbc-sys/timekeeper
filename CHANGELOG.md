@@ -13,6 +13,24 @@
 - 최소 셸: 오늘 화면 + 테마 토글(시스템/다크/라이트)
 - GitHub Actions: verify(PR·push) → Pages deploy(main)
 
+## 0.4.0 — F2·F3 수학 엔진 · 타임라인 · 집중 타이머 · 운동 균형 (2026-11-28)
+
+- **수학·통계 엔진 (`core/engine/`)** — 사실(EngineEvent)만 학습한다
+  - `replay.ts` — 이벤트 → `ModelState` (분류 4셀 + 전체 2단 축소, 4블록 Beta, kind별 P_start)
+  - `durationModel.ts` — EWMA + 경험적 베이즈 보정. 카드에 `예상 60분 → 보정 약 78분` / `30~130분일 수 있어요`
+  - `energyModel.ts` — 집중 곡선 E(t) · 피로 F · `P_finish` · 운동 회복 `ΔU ∈ [0,1]`
+  - `recommender.ts` — 7항 효용(`합 1.00`) + 하드 제약(같은 분류 2장 · 남은 시간) + 추천 이유(%)
+  - `statsModel.ts` — 7일 영역 균형 · 추정 정확도
+- **ADHD 메커니즘 (`core/rules/adhd.ts`)**
+  - 집중 세션: 시작/일시정지/이어서/연장/완료/중단. 실제 소요가 그 자리에서 시간 모델의 관측이 된다
+  - MVS 0→1 (`core/data/mvs.ts`) — 제목에서 문구 생성·로테이션·보드 중복 회피, 1탭 수정
+  - 5분 재보기 — `u ≥ 0.45` 일 때만 버튼, 판정 2선택, 7일 쿨다운, 쪼개기 제안
+  - 에너지 스위치(상/중/하) · 운동 플랜 B(최소 기준) · 오늘 배치/해제
+- **타임라인 (`ui/features/timeline`)** — 04:00–28:00 축 · NowLine · 블록 · 남은 시간 · 추천 제안 블록
+- **대시보드** — 인박스 · 보드 · 타임라인 · 지금/균형/운동 위젯 (PC 3단, 모바일 하단 3탭)
+- **샘플 하루** — 빈 화면 전용 `[샘플 하루 불러오기]`, 기존 데이터는 건드리지 않는다
+- 테스트 73 → 107 (엔진 · MVS 스냅샷 · ADHD 규칙 · 타임라인 · 통합 흐름)
+
 ## 0.3.0 — UI 전면 고도화 · 테마 6종 · 스튜디오 · 뷰 3종 (2026-11-27)
 
 - **테마 프셋 6종** (`src/tokens/themes.ts`) — Midnight Slate · Warm Espresso · Forest Moss · Nordic Paper · Soft Mist · Obsidian Mono

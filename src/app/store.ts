@@ -5,21 +5,42 @@
  * F1의 영속화는 키-값 어댑터(localStorage)다. F4에서 sync 어댑터만 갈아끼우면
  * 화면은 그대로 동작한다.
  */
-import type { AppDataV1, Instant, ItemId, LocalDate, Settings } from '@core/schema/current';
+import type { AppDataV1, Energy, Instant, ItemId, LocalDate, Settings } from '@core/schema/current';
 import {
   SCHEMA_VERSION,
+  abandonFocus,
+  applyProbeVerdict,
   captureFromText,
+  completeFocus,
+  completeWorkout,
   completedOnBoard,
   createAppData,
   createSettings,
   defaultContextMap,
   demotedToInbox,
+  dismissProbe,
+  ensureWorkoutItem,
+  extendFocus,
+  loadSampleDay,
   logicalDate,
+  markStarted,
+  minutesOfDay,
+  pauseFocus,
   postponedToTomorrow,
   promotedToToday,
   removedItem,
   resolveFocusCards,
+  resumeFocus,
   runRollover,
+  scheduleItem,
+  setEnergyLevel,
+  setEstimate,
+  setMvsLabel,
+  setWorkoutPlan,
+  startFocus,
+  startProbe,
+  unscheduleItem,
+  type AdhdFailure,
   type BoardCtx,
   type BoardFailure,
   type FactoryDeps,
@@ -34,7 +55,7 @@ export interface AppStoreOptions {
   timezone?: string;
 }
 
-export type CommandReason = BoardFailure | 'empty';
+export type CommandReason = BoardFailure | AdhdFailure | 'empty';
 
 export interface CommandOutcome {
   ok: boolean;
@@ -65,6 +86,30 @@ export interface AppStore {
   remove(itemId: ItemId): CommandOutcome;
   undo(): boolean;
   canUndo(): boolean;
+
+  // ── F2·F3: 집중·재보기·에너지·배치·운동 ───────────
+  startFocus(itemId: ItemId, minutes?: number): CommandOutcome;
+  pauseFocus(): CommandOutcome;
+  resumeFocus(): CommandOutcome;
+  extendFocus(minutes: number): CommandOutcome;
+  completeFocus(): CommandOutcome;
+  abandonFocus(): CommandOutcome;
+  markStarted(itemId: ItemId): CommandOutcome;
+  setEnergy(level: Energy): CommandOutcome;
+  setMvs(itemId: ItemId, label: string): CommandOutcome;
+  setEstimate(itemId: ItemId, minutes: number): CommandOutcome;
+  startProbe(itemId: ItemId): CommandOutcome;
+  dismissProbe(itemId: ItemId): CommandOutcome;
+  applyProbe(itemId: ItemId, verdict: 'kept' | 'bigger', revisedMin?: number, actualMin?: number): CommandOutcome;
+  schedule(itemId: ItemId, startMin: number, durationMin?: number): CommandOutcome;
+  unschedule(itemId: ItemId): CommandOutcome;
+  setWorkoutPlan(itemId: ItemId, plan: 'full' | 'planB'): CommandOutcome;
+  completeWorkout(itemId: ItemId, minutes?: number): CommandOutcome;
+  ensureWorkout(): CommandOutcome;
+  loadSample(): CommandOutcome;
+  /** 지금 시각을 하루 경계 기준 분으로 — 화면이 타임라인을 그릴 때 쓴다. */
+  nowMinute(): number;
+  nowInstant(): Instant;
   /** 하루 경계를 지났으면 롤오버. 바뀌었으면 true. */
   syncDay(): boolean;
   /** 다른 탭이 저장한 것을 다시 읽는다 (storage 이벤트). */
@@ -97,6 +142,9 @@ function normalize(stored: AppDataV1 | null, deps: FactoryDeps, timezone?: strin
     contexts: { ...defaultContextMap(), ...(stored.contexts ?? {}) },
     snapshots: stored.snapshots ?? {},
     events: stored.events ?? {},
+    // 돌고 있는 타이머는 새로고침·다른 탭에서도 살아 있어야 한다 (5.9 백그라운드).
+    ...(stored.focusSession ? { focusSession: stored.focusSession } : {}),
+    ...(stored.sampleLoadedAt ? { sampleLoadedAt: stored.sampleLoadedAt } : {}),
   };
 }
 
@@ -149,7 +197,7 @@ export function createAppStore(options: AppStoreOptions): AppStore {
   });
 
   const run = (
-    command: (ctx: BoardCtx) => { data: AppDataV1; ok: boolean; reason?: BoardFailure },
+    command: (ctx: BoardCtx) => { data: AppDataV1; ok: boolean; reason?: BoardFailure | AdhdFailure },
   ): CommandOutcome => {
     refreshDay();
     const previous = data;
@@ -191,6 +239,29 @@ export function createAppStore(options: AppStoreOptions): AppStore {
     complete: (itemId) => run((ctx) => completedOnBoard(ctx, itemId)),
     postpone: (itemId) => run((ctx) => postponedToTomorrow(ctx, itemId)),
     remove: (itemId) => run((ctx) => removedItem(ctx, itemId)),
+
+    startFocus: (itemId, minutes) => run((ctx) => startFocus(ctx, itemId, minutes)),
+    pauseFocus: () => run((ctx) => pauseFocus(ctx)),
+    resumeFocus: () => run((ctx) => resumeFocus(ctx)),
+    extendFocus: (minutes) => run((ctx) => extendFocus(ctx, minutes)),
+    completeFocus: () => run((ctx) => completeFocus(ctx)),
+    abandonFocus: () => run((ctx) => abandonFocus(ctx)),
+    markStarted: (itemId) => run((ctx) => markStarted(ctx, itemId)),
+    setEnergy: (level) => run((ctx) => setEnergyLevel(ctx, level)),
+    setMvs: (itemId, label) => run((ctx) => setMvsLabel(ctx, itemId, label)),
+    setEstimate: (itemId, minutes) => run((ctx) => setEstimate(ctx, itemId, minutes)),
+    startProbe: (itemId) => run((ctx) => startProbe(ctx, itemId)),
+    dismissProbe: (itemId) => run((ctx) => dismissProbe(ctx, itemId)),
+    applyProbe: (itemId, verdict, revisedMin, actualMin) =>
+      run((ctx) => applyProbeVerdict(ctx, itemId, verdict, revisedMin, actualMin)),
+    schedule: (itemId, startMin, durationMin) => run((ctx) => scheduleItem(ctx, itemId, startMin, durationMin)),
+    unschedule: (itemId) => run((ctx) => unscheduleItem(ctx, itemId)),
+    setWorkoutPlan: (itemId, plan) => run((ctx) => setWorkoutPlan(ctx, itemId, plan)),
+    completeWorkout: (itemId, minutes) => run((ctx) => completeWorkout(ctx, itemId, minutes)),
+    ensureWorkout: () => run((ctx) => ensureWorkoutItem(ctx)),
+    loadSample: () => run((ctx) => loadSampleDay(ctx)),
+    nowMinute: () => minutesOfDay(now()),
+    nowInstant: () => now(),
     undo() {
       if (!undoData) return false;
       data = undoData;

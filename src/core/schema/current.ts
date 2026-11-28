@@ -17,6 +17,7 @@ export type {
   ErrandItem,
   Estimate,
   Exploration,
+  FocusSession,
   Goal,
   Instant,
   Intensity,

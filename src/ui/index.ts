@@ -17,3 +17,15 @@ export { Button, type ButtonProps } from './primitives/Button';
 export { Toast, type ToastProps } from './primitives/Toast';
 export { Overlay, type OverlayProps } from './primitives/Overlay';
 export { EmptyState, type EmptyStateProps } from './patterns/EmptyState';
+export { EnergySwitch, type EnergySwitchProps } from './features/energy/EnergySwitch';
+export { RecommendStrip, type RecommendStripProps } from './features/recommend/RecommendStrip';
+export {
+  TimelinePanel,
+  type PendingPlacement,
+  type TimelinePanelProps,
+  type TimelineSuggestion,
+} from './features/timeline/TimelinePanel';
+export { InsightsPanel, type InsightsPanelProps } from './features/insights/InsightsPanel';
+export { FocusOverlay, type FocusOverlayProps } from './features/focus/FocusOverlay';
+export { ProbeOverlay, type ProbeOverlayProps } from './features/probe/ProbeOverlay';
+export { ExplainSheet, type ExplainSheetProps } from './features/explain/ExplainSheet';

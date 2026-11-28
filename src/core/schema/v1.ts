@@ -27,6 +27,24 @@ export interface Placement {
   source: 'manual' | 'suggested';
 }
 
+/**
+ * 집중 세션 — 타이머가 도는 동안의 사실 (F2, M7 · 5.9).
+ * 파생값이 아니라 "지금 돌고 있는 세션"이라 저장한다. 앱을 닫아도 살아남는다.
+ */
+export interface FocusSession {
+  itemId: ItemId;
+  /** 'focus' = 집중 타이머, 'probe' = 5분 재보기 */
+  mode: 'focus' | 'probe';
+  startedAt: Instant;
+  /** 계획한 길이(분). 연장하면 늘어난다. */
+  plannedMin: number;
+  endsAt: Instant;
+  pausedAt?: Instant;
+  pausedTotalMs?: number;
+  /** 세션을 시작할 때의 보정 추정 — 완료 시 실제/계획 비율의 분모 */
+  plannedEstimateMin?: number;
+}
+
 /** 5분 재보기 결과 (M6). 판정은 2종이고, 쪼개기는 판정이 아니라 별도 제안이다. */
 export interface Exploration {
   doneAt: Instant;
@@ -201,6 +219,12 @@ export interface AppDataV1 {
   snapshots: Record<LocalDate, DailySnapshot>;
   events: Record<string, EngineEvent>; // 엔진의 유일한 학습 입력 (append-only)
   engineCache?: ModelState; // 재계산 가능한 캐시 — 동기화·백업 제외
+
+  // ── v1.2 흡수 (expand-only) ────────────────────────
+  /** 지금 돌고 있는 집중 타이머·재보기. 없으면 필드 자체가 없다. */
+  focusSession?: FocusSession;
+  /** 샘플 하루를 마지막으로 불러온 시각 — 기존 사용자 데이터 보존 표시 */
+  sampleLoadedAt?: Instant;
 }
 
 /** 발생한 사실. 수정·삭제하지 않는다. */

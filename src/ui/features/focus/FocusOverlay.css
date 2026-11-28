@@ -1,0 +1,217 @@
+.focus-mode {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background: var(--scrim);
+  backdrop-filter: blur(10px);
+  animation: focus-in var(--dur-base) var(--ease-enter);
+}
+
+@keyframes focus-in {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.focus-mode__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: min(420px, 100%);
+  text-align: center;
+}
+
+.focus-mode__ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 180px;
+  height: 180px;
+}
+
+.focus-mode__svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.focus-mode__track {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 5;
+}
+
+.focus-mode__progress {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.focus-mode__ring[data-expired='true'] .focus-mode__progress {
+  stroke: var(--held);
+}
+
+.focus-mode__ring[data-paused='true'] .focus-mode__progress {
+  stroke: var(--text-3);
+}
+
+.focus-mode__clock {
+  position: relative;
+  color: var(--text-1);
+  font-family: var(--font-meta);
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.focus-mode__caption {
+  position: absolute;
+  bottom: 34px;
+  color: var(--text-3);
+  font-family: var(--font-meta);
+  font-size: var(--text-micro-size);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.focus-mode__title {
+  margin: var(--space-2) 0 0;
+  color: var(--text-1);
+  font-family: var(--font-display);
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-line);
+  font-weight: 600;
+  letter-spacing: var(--text-title-tracking);
+  overflow-wrap: anywhere;
+}
+
+.focus-mode__mvs {
+  margin: 0;
+  max-width: 320px;
+  color: var(--text-2);
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line);
+}
+
+.focus-mode__meta {
+  margin: 0;
+  color: var(--text-3);
+  font-family: var(--font-meta);
+  font-size: var(--text-micro-size);
+  letter-spacing: var(--label-tracking);
+}
+
+.focus-mode__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.focus-mode__primary {
+  min-height: 44px;
+  padding: 0 var(--space-6);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: var(--text-body-sm-size);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-standard);
+}
+
+.focus-mode__primary:active {
+  transform: scale(0.97);
+}
+
+.focus-mode__secondary {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: var(--hairline) solid var(--chip-border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-2);
+  font-size: var(--text-body-sm-size);
+  cursor: pointer;
+}
+
+.focus-mode__ghost {
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 0;
+  background: transparent;
+  color: var(--text-3);
+  font-size: var(--text-caption-size);
+  cursor: pointer;
+}
+
+.focus-mode__ghost:hover {
+  color: var(--done);
+}
+
+.focus-mode__choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(260px, 100%);
+  margin-top: var(--space-3);
+}
+
+.focus-mode__choice {
+  min-height: 42px;
+  border: var(--hairline) solid var(--chip-border);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--text-1);
+  font-size: var(--text-body-sm-size);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    background var(--dur-fast) var(--ease-standard);
+}
+
+.focus-mode__choice:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-weak);
+}
+
+.focus-mode__leave {
+  margin-top: var(--space-4);
+  border: 0;
+  background: transparent;
+  color: var(--text-3);
+  font-size: var(--text-caption-size);
+  cursor: pointer;
+}
+
+.focus-mode__leave:hover {
+  color: var(--text-1);
+}
+
+@media (max-width: 480px) {
+  .focus-mode__ring {
+    width: 156px;
+    height: 156px;
+  }
+
+  .focus-mode__clock {
+    font-size: 28px;
+  }
+}

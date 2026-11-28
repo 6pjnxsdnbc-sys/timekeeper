@@ -99,6 +99,13 @@ export function resolveFocusCards(settings: Pick<Settings, 'maxFocusCards'>): nu
   return settings.maxFocusCards ?? POLICY.maxFocusCards;
 }
 
+/** 효용 7항의 가중치 목록 — 단위 테스트가 합을 검사한다 (T2). */
+export function selectionWeights(
+  w: Policy['engine']['utility'] = POLICY.engine.utility,
+): number[] {
+  return [w.wUrgency, w.wBalance, w.wEnergy, w.wFit, w.wStart, w.wSwitch, w.wRecovery];
+}
+
 /** 엔진 가중치 7항의 합. 1.0 이어야 한다 (4.11 · T2). */
 export function engineWeightSum(
   w: Policy['engine']['utility'] = POLICY.engine.utility,
