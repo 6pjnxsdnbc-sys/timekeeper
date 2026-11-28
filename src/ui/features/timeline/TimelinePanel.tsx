@@ -23,8 +23,6 @@ export interface TimelineSuggestion {
 
 export interface TimelinePanelProps {
   timeline: TimelineView;
-  /** 화면에 실제로 보이는 순간에 지금 시각으로 스크롤한다 (모바일 탭) */
-  active?: boolean;
   suggestion?: TimelineSuggestion | null;
   pending: PendingPlacement | null;
   onPick: (item: PendingPlacement | null) => void;
@@ -42,7 +40,6 @@ function positionOf(minute: number, dayStartMin: number): number {
 
 export function TimelinePanel({
   timeline,
-  active = true,
   suggestion,
   pending,
   onPick,
@@ -60,22 +57,27 @@ export function TimelinePanel({
     return list;
   }, [timeline.startHour, timeline.endHour]);
 
-  // 처음 열릴 때 지금 시각이 보이게 — 매분 따라가지는 않는다(산만 억제).
+  // 처음 보이는 순간 한 번만 지금 시각으로 — 매분 따라가지는 않는다(산만 억제).
+  // 모바일 탭에서는 display:none 이라 그때는 clientHeight 가 0 — 보이는 순간(I/O)에 맞춘다.
   useEffect(() => {
-    if (!active) return;
     const node = scrollRef.current;
-    if (!node) return;
+    if (!node || typeof IntersectionObserver === 'undefined') return;
+    let applied = false;
     const apply = () => {
+      if (applied || node.clientHeight === 0) return;
       node.scrollTop = Math.max(0, positionOf(nowRef.current, timeline.dayStartMin) - HOUR_HEIGHT * 2);
+      applied = true;
     };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) apply();
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(node);
     apply();
-    const first = requestAnimationFrame(apply);
-    const second = requestAnimationFrame(() => requestAnimationFrame(apply));
-    return () => {
-      cancelAnimationFrame(first);
-      cancelAnimationFrame(second);
-    };
-  }, [active, timeline.dayStartMin]);
+    return () => observer.disconnect();
+  }, [timeline.dayStartMin]);
 
   const handleTrackClick = (event: MouseEvent<HTMLDivElement>) => {
     if (!pending) return;
