@@ -237,7 +237,7 @@
 .timeline__now::before {
   content: '';
   position: absolute;
-  left: 40px;
+  left: 41px;
   top: -3px;
   width: 7px;
   height: 7px;
@@ -247,7 +247,7 @@
 
 .timeline__now-label {
   position: absolute;
-  left: 0;
+  left: 52px;
   top: -7px;
   padding: 1px 4px;
   border-radius: var(--radius-sm);

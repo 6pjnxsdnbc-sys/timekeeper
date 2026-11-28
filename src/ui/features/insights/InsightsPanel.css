@@ -65,13 +65,13 @@
   height: var(--level);
   min-height: 4px;
   border-radius: var(--radius-sm) var(--radius-sm) 2px 2px;
-  background: var(--surface-hover);
+  background: color-mix(in srgb, var(--text-3) 22%, transparent);
   border-top: 2px solid var(--border-strong);
   transition: height var(--dur-base) var(--ease-standard);
 }
 
 .insight__bar[data-active='true'] .insight__bar-fill {
-  background: var(--accent-weak);
+  background: var(--accent-soft);
   border-top-color: var(--accent);
 }
 
