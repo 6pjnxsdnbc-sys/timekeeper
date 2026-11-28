@@ -211,6 +211,7 @@ export function TodayScreen({
   const timelinePanel = (
     <TimelinePanel
       timeline={insight.timeline}
+      active={view !== 'dashboard' || tab === 'timeline'}
       suggestion={suggestion}
       pending={pending}
       onPick={setPending}

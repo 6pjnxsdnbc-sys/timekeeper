@@ -23,6 +23,8 @@ export interface TimelineSuggestion {
 
 export interface TimelinePanelProps {
   timeline: TimelineView;
+  /** 화면에 실제로 보이는 순간에 지금 시각으로 스크롤한다 (모바일 탭) */
+  active?: boolean;
   suggestion?: TimelineSuggestion | null;
   pending: PendingPlacement | null;
   onPick: (item: PendingPlacement | null) => void;
@@ -40,6 +42,7 @@ function positionOf(minute: number, dayStartMin: number): number {
 
 export function TimelinePanel({
   timeline,
+  active = true,
   suggestion,
   pending,
   onPick,
@@ -48,6 +51,8 @@ export function TimelinePanel({
   onStart,
 }: TimelinePanelProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const nowRef = useRef(timeline.nowMin);
+  nowRef.current = timeline.nowMin;
 
   const hours = useMemo(() => {
     const list: number[] = [];
@@ -57,11 +62,20 @@ export function TimelinePanel({
 
   // 처음 열릴 때 지금 시각이 보이게 — 매분 따라가지는 않는다(산만 억제).
   useEffect(() => {
+    if (!active) return;
     const node = scrollRef.current;
     if (!node) return;
-    const target = positionOf(timeline.nowMin, timeline.dayStartMin) - HOUR_HEIGHT * 2;
-    node.scrollTop = Math.max(0, target);
-  }, [timeline.dayStartMin]);
+    const apply = () => {
+      node.scrollTop = Math.max(0, positionOf(nowRef.current, timeline.dayStartMin) - HOUR_HEIGHT * 2);
+    };
+    apply();
+    const first = requestAnimationFrame(apply);
+    const second = requestAnimationFrame(() => requestAnimationFrame(apply));
+    return () => {
+      cancelAnimationFrame(first);
+      cancelAnimationFrame(second);
+    };
+  }, [active, timeline.dayStartMin]);
 
   const handleTrackClick = (event: MouseEvent<HTMLDivElement>) => {
     if (!pending) return;
