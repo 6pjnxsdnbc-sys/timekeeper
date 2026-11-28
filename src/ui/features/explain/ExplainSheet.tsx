@@ -19,7 +19,7 @@ export interface ExplainSheetProps {
 }
 
 export function ExplainSheet({ open, item, breakdown, estimate, onClose }: ExplainSheetProps) {
-  const samples = estimate?.cellN ?? 0;
+  const samples = Math.floor(estimate?.cellN ?? 0);
   const known = samples >= 3;
 
   return (

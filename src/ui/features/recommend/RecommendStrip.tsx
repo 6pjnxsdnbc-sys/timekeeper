@@ -67,7 +67,9 @@ export function RecommendStrip({ insight, items, onStart, onExplain }: Recommend
           </span>
         ) : null}
         <span className="recommend__fit num">
-          {`${STRINGS.explain.probability} ${toPercent(recommendation.breakdown.probability.done)}%`}
+          {estimate && estimate.cellN >= 3
+            ? `${STRINGS.explain.probability} ${toPercent(recommendation.breakdown.probability.done)}%`
+            : `${STRINGS.explain.probability} ${STRINGS.explain.unknown}`}
         </span>
       </div>
 
