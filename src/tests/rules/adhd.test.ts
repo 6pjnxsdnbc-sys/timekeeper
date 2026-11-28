@@ -252,6 +252,10 @@ describe('샘플 하루 (온보딩)', () => {
     expect(insight.stats.accuracy.samples).toBeGreaterThanOrEqual(10);
     expect(insight.timeline.blocks.length).toBeGreaterThanOrEqual(3);
     expect(insight.mvs[insight.selection.picks[0]?.itemId ?? '']).toBeDefined();
+    // 오늘 보드에 선 카드는 추천 3장이 아니어도 첫 동작 한 줄을 갖는다.
+    for (const pick of result.data.snapshots[TODAY]?.focusPicks ?? []) {
+      expect(insight.mvs[pick.itemId]?.label.length ?? 0).toBeGreaterThan(0);
+    }
 
     const again = loadSampleDay({ data: result.data, today: TODAY, deps });
     expect(again.ok).toBe(false);

@@ -134,10 +134,17 @@ export function selectInsight(
   const mvs: Record<ItemId, MvsView> = {};
   const boardTitles: string[] = [];
   const dayIndex = Math.abs(daysBetween('2020-01-01' as LocalDate, today));
-  const ordered: Item[] = [
-    ...selection.picks.map((pick) => data.items[pick.itemId]).filter((item): item is Item => Boolean(item)),
-    ...(timeline.unplaced.map((entry) => entry.item) ?? []),
-  ];
+  const boardIds = (data.snapshots[today]?.focusPicks ?? []).map((pick) => pick.itemId);
+  const ordered: Item[] = [];
+  for (const id of [
+    ...selection.picks.map((pick) => pick.itemId),
+    ...boardIds,
+    ...timeline.unplaced.map((entry) => entry.item.id),
+    ...timeline.blocks.filter((block) => !block.locked).map((block) => block.itemId),
+  ]) {
+    const item = data.items[id];
+    if (item && !ordered.some((entry) => entry.id === item.id)) ordered.push(item);
+  }
   for (const item of ordered) {
     if (item.kind === 'anchor' || item.deletedAt || item.status === 'done') continue;
     if (mvs[item.id]) continue;
